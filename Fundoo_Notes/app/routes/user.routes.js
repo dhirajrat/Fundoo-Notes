@@ -1,6 +1,6 @@
 module.exports = (app) => {
     const controller = require("../controllers/user.controller.js");
   
-    // Create a new Note
+    // Post User Registration
     app.post("/register", controller.register);
   };

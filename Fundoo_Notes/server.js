@@ -14,10 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-// Configuring the database
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-
 
 //Conneting To the Database
 const connection =require("./config/database.config.js");
@@ -31,6 +27,8 @@ app.get("/", (req, res) => {
       "Welcome to FundooNotes application. Take notes quickly. Organize and keep track of all your notes.",
   });
 });
+
+
 // Require user routes
 require("./app/routes/user.routes.js")(app);
 

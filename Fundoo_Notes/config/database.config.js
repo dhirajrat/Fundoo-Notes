@@ -3,7 +3,12 @@ const mongoose = require('mongoose')
 const url = process.env.DB_CONNECT_URL;
 
 class DBconnection {
+  /**
+   * Configuring Database
+   * Connecting to Database Server
+   */
     database = () => {
+      // Configuring the database
       mongoose.Promise = global.Promise;
       //mongoose connect method help us to connect with DB
       mongoose.connect(url, {

@@ -1,31 +1,7 @@
 const userService = require("../service/user.service.js");
-const Joi = require("joi");
-
-// Validator Schema
-class ValidatorSchema {
-  auth = Joi.object({
-    firstName: Joi.string()
-                .min(3)
-                .required()
-                .pattern(new RegExp('^[A-Z]{1}[a-z]{1,}$')),
-
-    lastName: Joi.string()
-                .min(3)
-                .required()
-                .pattern(new RegExp('^[A-Z]{1}[a-z]{1,}$')),
-
-    email: Joi.string()
-                .required(),
-
-    Password: Joi.string()
-                .required()
-  });
-}
-const validatorObj = new ValidatorSchema();
-
+const validatorObj = require('../validation/validation.js');
 
 // Controller Class
-
 class Controller {
   register = (req, res) => {
     try {
@@ -37,7 +13,6 @@ class Controller {
       };
 
       const validUser = validatorObj.auth.validate(user);
-
 
       if(!validUser.error){
         userService.registerUser(user, (error, data) => {
