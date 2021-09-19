@@ -70,6 +70,19 @@ class userModel {
       return callback("Internal Error", null);
     }
   };
+
+  loginUser = (loginData, callback) => {
+    user.findOne({ email: loginData.email }, (error, data) => {
+      if (error) {
+        return callback(error, null);
+      } else if (!data) {
+        return callback("Invalid Login Info", null);
+      } else {
+        return callback(null, data);
+      }
+    });
+  };
+
 }
 
 module.exports = new userModel();

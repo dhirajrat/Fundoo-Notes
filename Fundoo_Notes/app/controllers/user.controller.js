@@ -52,7 +52,41 @@ class Controller {
         }
   };
 
+  login = (req, res) => {
+    try {
+      const loginInfo = {
+        email : req.body.email,
+        Password : req.body.Password
+      }
+
+
+      userService.loginUser(loginInfo, (error, data) => {
+        if (error) {
+          return res.status(403).json({
+            success: false,
+            message: "Incorrect email or password",
+            error,
+          });
+        } if(data) {
+          return res.status(200).json({
+            success: true,
+            message: "login successfull",
+            data,
+          });
+        }
+      });
+
+
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        data: null,
+        message: "server-error",
+      });
+    }
+  }
   
+
 }
 
 
