@@ -1,5 +1,9 @@
+const bcrypt = require('bcrypt');
 const mongoose = require("mongoose");
 
+/**
+ * Mongoose Schema
+ */
 const userSchema = mongoose.Schema(
   {
     firstName: {
@@ -26,8 +30,25 @@ const userSchema = mongoose.Schema(
   }
 );
 
+/**
+ * Convert Password Into Hashed before Save
+ */
+userSchema.pre('save', async function (next){
+  try {
+    const hashpassword = await bcrypt.hash(this.Password, 10);
+    this.Password = hashpassword;
+    next();
+  } catch(error){
+    next(error);
+  }
+});
+
+
 const user = mongoose.model("user", userSchema);
 
+/**
+ * Check User Exist, If not then save the data into database
+ */
 class userModel {
   registerUser = (userDetails, callback) => {
     const newUser = new user({

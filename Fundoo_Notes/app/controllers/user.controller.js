@@ -1,8 +1,14 @@
 const userService = require("../service/user.service.js");
-const validatorObj = require('../userValidation/validation.js');
+const validatorObj = require('../utility/validation.js');
 
 // Controller Class
 class Controller {
+  /**
+   * Register User
+   * @param {Request} req 
+   * @param {Response} res 
+   * @returns 
+   */
   register = (req, res) => {
     try {
       const user = {
@@ -30,7 +36,7 @@ class Controller {
             message: "Already exist User",
           });
         } else {
-          res.status(201).json({
+          return res.status(201).json({
             success: true,
             data: data,
             message: "User Data Inserted successfully",
@@ -48,4 +54,6 @@ class Controller {
 
   
 }
+
+
 module.exports = new Controller();
