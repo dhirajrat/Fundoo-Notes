@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 const userModel = require("../models/user.model.js");
 
 class userService {
@@ -29,10 +30,10 @@ class userService {
         if (!databaseData) {
           return callback("Password not correct", null);
         } else {
-          return callback(null, data);
+          const token = jwt.sign({id: data._id, firstName: data.firstName, lastName: data.lastName}, process.env.SECRET_KEY);
+          return callback(null, token);
         }
         });
-
       } else {
         return callback("Login Info-Error !!");
       }
