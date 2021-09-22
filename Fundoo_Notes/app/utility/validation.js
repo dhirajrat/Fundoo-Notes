@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 // Input Validation Schema
 class ValidatorSchema {
-  auth = Joi.object({
+  authRegister = Joi.object({
     firstName: Joi.string()
                 .min(2)
                 .required()
@@ -19,7 +19,17 @@ class ValidatorSchema {
 
     Password: Joi.string()
                 .required()
-                // .pattern(new RegExp('[A-Za-z0-9]{4,}[$&+,:;=?@#|<>.^*()%!-]{2,}'))
+                .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
+  });
+
+  authLogin = Joi.object({
+    email: Joi.string()
+                .required()
+                .pattern(new RegExp('^[a-zA-z]{3}([+-_ .]*[a-zA-Z0-9]+)*[@][a-zA-z0-9]+(.[a-z]{2,3})*$')),
+
+    Password: Joi.string()
+                .required()
+                .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
   });
 }
 

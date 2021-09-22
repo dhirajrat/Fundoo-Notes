@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
 const mongoose = require("mongoose");
+const helper = require("../utility/helper");
 
 /**
  * Mongoose Schema
@@ -30,20 +30,6 @@ const userSchema = mongoose.Schema(
   }
 );
 
-/**
- * Convert Password Into Hashed before Save
- */
-userSchema.pre('save', async function (next){
-  try {
-    const hashpassword = await bcrypt.hash(this.Password, 10);
-    this.Password = hashpassword;
-    next();
-  } catch(error){
-    next(error);
-  }
-});
-
-
 const user = mongoose.model("user", userSchema);
 
 /**
@@ -62,8 +48,18 @@ class userModel {
         if (data) {
           return callback("User already exist", null);
         } else {
-          newUser.save();
-          return callback(null, newUser);
+
+          helper.hashing(userDetails.Password, (err, hashedPassword) => {
+            if(err){
+              throw err;
+            }
+            else{
+              newUser.Password = hashedPassword;
+              newUser.save();
+              return callback(null, newUser);
+            }
+          })
+          
         }
       });
     } catch (error) {
@@ -72,6 +68,7 @@ class userModel {
   };
 
   loginUser = (loginData, callback) => {
+    
     user.findOne({ email: loginData.email }, (error, data) => {
       if (error) {
         return callback(error, null);
@@ -81,6 +78,7 @@ class userModel {
         return callback(null, data);
       }
     });
+
   };
 
 }

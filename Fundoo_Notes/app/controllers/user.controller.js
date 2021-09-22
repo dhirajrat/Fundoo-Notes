@@ -18,7 +18,7 @@ class Controller {
         Password: req.body.Password
       };
 
-      const validUser = validatorObj.auth.validate(user);
+      const validUser = validatorObj.authRegister.validate(user);
 
       if (validUser.error) {
         console.log(validUser.error)
@@ -59,6 +59,14 @@ class Controller {
         Password : req.body.Password
       }
 
+      const validLoginDetails = validatorObj.authLogin.validate(loginInfo)
+      if (validLoginDetails.error) {
+        return res.status(400).json({
+          success: false,
+          message: "InValid email or password",
+          data: loginInfo
+        });
+      }
 
       userService.loginUser(loginInfo, (error, data) => {
         if (error) {
