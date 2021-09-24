@@ -44,24 +44,21 @@ class userModel {
       Password: userDetails.Password
     });
     try {
-      user.findOne({ email: userDetails.email }, (err, data) => {
-        if (data) {
-          return callback("User already exist", null);
-        } else {
-
           helper.hashing(userDetails.Password, (err, hashedPassword) => {
             if(err){
               throw err;
             }
             else{
               newUser.Password = hashedPassword;
-              newUser.save();
-              return callback(null, newUser);
+              newUser.save((error, data) => {
+                if (error) {
+                  callback(error, null);
+                } else {
+                  callback(null, data);
+                }
+              });
             }
           })
-          
-        }
-      });
     } catch (error) {
       return callback("Internal Error", null);
     }
@@ -80,7 +77,7 @@ class userModel {
     });
 
   };
-
+  
 }
 
 module.exports = new userModel();

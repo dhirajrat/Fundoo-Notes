@@ -1,0 +1,33 @@
+{
+    "user" : {
+        "registerAuth" : {
+            "firstName":"Dhiraj",
+            "lastName":"Rathod",
+            "email": "ssdlkusts@gmail.com",
+            "Password": "AbcdS@34#5.35"
+        },
+
+        "registerInvalid" : {
+            "lastName":"Rathod",
+            "email": "ssmsadsddl@gmail.com",
+            "Password": "AbcdS@34#5.35"
+        },
+        
+        "registerunAuth" : {
+            "firstName":"Dhiraj",
+            "lastName":"Rathod",
+            "email": "ssmasdddlgmail.com",
+            "Password": "AbcdS@34#5.35"
+        },
+        
+        "loginData" : {
+            "email": "ssmsadsddl@gmail.com",
+            "Password": "AbcdS@34#5.35"
+        },
+
+        "incorrectloginData" : {
+            "email": "ssmsadsddl@gmail.com",
+            "Password": "AbytefhsgdS@34#5.35"
+        }
+    }
+}
