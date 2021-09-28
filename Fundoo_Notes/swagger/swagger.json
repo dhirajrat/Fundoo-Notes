@@ -1,0 +1,146 @@
+{
+    "swagger": "2.0",
+    "definitions": {
+        "userInfo": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "description": "First Name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Last Name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email ID"
+                },
+                "Password": {
+                    "type": "string",
+                    "description": "Password"
+                }
+            },
+            "example": {
+                "firstName": "Dhiraj",
+                "lastName": "Rathod",
+                "email": "dhirajrat@gmail.com",
+                "Password": "AbcdS@34#5.35"
+            }
+        },
+        "loginInfo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email ID"
+                },
+                "Password": {
+                    "type": "string",
+                    "description": "Password"
+                }
+            },
+            "example": {
+                "email": "dhirajrat@gmail.com",
+                "Password": "AbcdS@34#5.35"
+            }
+        }
+    },
+    "info": {
+        "version": "1.0.0",
+        "title": "fundoonotes",
+        "description": "This is a Note Taking Service App",
+        "licence": {
+            "name": "MIT Licence",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:8000",
+    "tags": [
+        {
+            "name": "Fundoo Notes",
+            "description": "Registration And Login API"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Registration"
+                ],
+                "description": "Create a new user in the Fundoo Notes",
+                "parameters": [
+                    {
+                        "name": "User Registration",
+                        "in": "body",
+                        "description": "The created user",
+                        "schema": {
+                            "$ref": "#definitions/userInfo"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#definitions/userInfo"
+                },
+                "responses": {
+                    "201": {
+                        "description": "New User Created"
+                    },
+                    "409": {
+                        "description": "User already exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "User Login"
+                ],
+                "description": "If registered then You can Login using Email and Password",
+                "parameters": [
+                    {
+                        "name": "User Login",
+                        "in": "body",
+                        "description": "login with Ligin Info",
+                        "schema": {
+                            "$ref": "#definitions/loginInfo"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#definitions/userInfo"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Success"
+                    },
+                    "403": {
+                        "description": "Incorrect login info Unable to login"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}
