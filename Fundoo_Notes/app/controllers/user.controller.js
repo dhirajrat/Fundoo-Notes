@@ -1,6 +1,10 @@
 const userService = require("../service/user.service.js");
 const validatorObj = require('../utility/validation.js');
-const logger = require('../../logger')
+const logger = require('../../logger/logger')
+
+const mailgun = require("mailgun-js");
+const DOMAIN = 'sandbox0c9eaade46f04703820a967a3d19bd64.mailgun.org';
+const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
 
 // Controller Class
 class Controller {
@@ -41,6 +45,17 @@ class Controller {
             message: "Already exist User",
           });
         } else {
+
+          const edata = {
+            from: 'no-reply@fundoonotes.com',
+            to: req.body.email,
+            subject: 'Welcome to fundoonotes',
+            text: 'Hello '+req.body.firstName+' Your Account registered to fundoo notes successfully'
+          };
+          mg.messages().send(edata, function (error, body) {
+            console.log(body);
+          });
+
           logger.info('User Data Inserted successfully');
           return res.status(201).json({
             success: true,

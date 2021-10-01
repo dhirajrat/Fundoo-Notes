@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable consistent-return */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
 /* eslint-disable linebreak-style */
 const chai = require('chai');
@@ -20,7 +22,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(201);
         if (err) {
-          return 'error';
+          return done(error);
         }
       });
     done();
@@ -35,7 +37,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(400);
         if (err) {
-          return 'error';
+          return done(error);
         }
       });
     done();
@@ -50,7 +52,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(400);
         if (err) {
-          return 'error';
+          return done(error);
         }
       });
     done();
