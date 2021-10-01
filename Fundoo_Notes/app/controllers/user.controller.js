@@ -3,7 +3,7 @@ const validatorObj = require('../utility/validation.js');
 const logger = require('../../logger/logger')
 
 const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox0c9eaade46f04703820a967a3d19bd64.mailgun.org';
+const DOMAIN = process.env.MAILER_DOMAIN;
 const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
 
 // Controller Class
