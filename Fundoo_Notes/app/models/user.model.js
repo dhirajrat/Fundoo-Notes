@@ -44,6 +44,7 @@ class userModel {
       Password: userDetails.Password
     });
     try {
+          // Password Hashed
           helper.hashing(userDetails.Password, (err, hashedPassword) => {
             if(err){
               throw err;
@@ -65,7 +66,7 @@ class userModel {
   };
 
   loginUser = (loginData, callback) => {
-    
+    // Checking Email into database present or not
     user.findOne({ email: loginData.email }, (error, data) => {
       if (error) {
         return callback(error, null);
@@ -74,6 +75,16 @@ class userModel {
       }
     });
   };
+
+  forgotPasswordModel = (userInfo, callback) => {
+    user.findOne({email: userInfo.email}, (error, data) =>{
+      if(error) {
+        return callback(error, null);
+      } else {
+        return callback(null, data);
+      }
+    });
+  }
 }
 
 module.exports = new userModel();

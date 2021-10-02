@@ -9,6 +9,8 @@ class userService {
    * @param {*} callback 
    */
   registerUser = (user, callback) => {
+    // Send Welcome Mail to User on his Mail
+    helper.sendWelcomeMail(user);
     userModel.registerUser(user, (err, data) => {
       if (err) {
         return callback(err, null);
@@ -26,11 +28,14 @@ class userService {
   loginUser = (loginInfoData, callback) => {
     userModel.loginUser(loginInfoData, (error, data) => {
       if (data) {
+        // Compare Input Password with The Database Password
         bcrypt.compare(loginInfoData.Password, data.Password, (err, databaseData) => {
         if (!databaseData) {
           return callback("Password not correct", null);
         } else {
-          helper.jwtTokenGenerate(data, (err, token) =>{
+          // Generate JWT token
+          const secretkey = data.Password + process.env.SECRET_KEY
+          helper.jwtTokenGenerate(data, secretkey, (err, token) =>{
             if(token){
               return callback(null, token);
             }
@@ -45,6 +50,25 @@ class userService {
       }
     });
   };
+
+  forgotPasswordService = (userInfo, callback) => {
+    userModel.forgotPasswordModel(userInfo, (error, data) => {
+      if(error){
+        return callback(error, null);
+      }else {
+        // Generate JWT token
+        const secretkey = data.Password + process.env.SECRET_KEY
+        helper.jwtTokenGenerate(data.email, secretkey, (err, token) =>{
+          if(token){
+            return callback(null, token);
+          }
+          else {
+            throw err;
+          }
+        });
+      }
+    });
+  }
 
 
 }

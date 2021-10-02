@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
+const logger = require('./logger/logger');
 
 // const dotenv =
 require('dotenv').config();
@@ -41,6 +42,7 @@ require('./app/routes/user.routes')(app);
 
 // listen for requests
 app.listen(process.env.PORT, () => {
+  logger.info('**************** express server started **************');
   console.log(`Server is listening on port ${process.env.PORT}`);
 });
 

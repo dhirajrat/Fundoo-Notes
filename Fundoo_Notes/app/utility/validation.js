@@ -22,6 +22,7 @@ class ValidatorSchema {
                 .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
   });
 
+  // Email and Password json Object Validation
   authLogin = Joi.object({
     email: Joi.string()
                 .required()

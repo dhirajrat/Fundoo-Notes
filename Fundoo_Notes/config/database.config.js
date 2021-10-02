@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const logger = require('../logger/logger');
 
 const url = process.env.DB_CONNECT_URL;
 
@@ -14,6 +15,7 @@ class DBconnection {
       mongoose.connect(url, {
         useNewUrlParser: true,
       }).then(() => {
+        logger.info('**************** connected to database **************');
         console.log("sucessfully connected to the database");
       }).catch(err => {
         console.log("Could not connect to the database. Exiting now..", err);
