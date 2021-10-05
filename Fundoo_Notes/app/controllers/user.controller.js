@@ -128,12 +128,43 @@ class Controller {
         }
       });
     } catch (error) {
+        return res.status(500).json({
+          success: false,
+          data: null,
+          message: "server-error",
+        });
+      };
+  }
+
+  resetPassword = (req, res, next) => {
+    try{
+      const {id, token} = req.params;
+      const resetInfo = {
+        id: id,
+        token: token,
+        newPassword: req.body.Password
+      }
+      console.log("id: "+resetInfo.id+" token: "+resetInfo.token);
+      userService.resetPassword(resetInfo, (error, data) => {
+        if (data) {
+          return res.status(200).json({
+            success: true,
+            message: "Password reset",
+          });
+        } else {
+          return res.status(403).json({
+            success: false,
+            message: "Link Expired",
+          });
+        }
+      })
+    }catch(error) {
       return res.status(500).json({
         success: false,
         data: null,
         message: "server-error",
       });
-      };
+    }
   }
   
 }

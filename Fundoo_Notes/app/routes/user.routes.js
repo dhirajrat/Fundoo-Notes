@@ -10,4 +10,7 @@ module.exports = (app) => {
 
   // Post Forgot Password
   app.post('/forgetpassword', controller.forgetPassword);
+
+  // Post Reset Password
+  app.post('/resetpassword/:id/:token', controller.resetPassword);
 };

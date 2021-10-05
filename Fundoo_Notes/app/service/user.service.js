@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user.model.js");
 const helper = require("../utility/helper.js");
+const jwt = require('jsonwebtoken');
 const logger = require('../../logger/logger');
 const nodemailer = require("nodemailer");
 
@@ -61,13 +62,13 @@ class userService {
     userModel.forgetPasswordModel(userInfo, (error, data) => {
       if(data){
 
-        console.log("pass ",data.Password);
         // Generate JWT token
-        const secretkey = data.Password+process.env.SECRET_KEY
+        const secretkey = data.Password + process.env.SECRET_KEY
         helper.jwtTokenGenerate(data.Password, secretkey, (err, token) =>{
           if(token){
 
-            const link = `http://localhost:${process.env.PORT}/reset-password/${token}`;
+            console.log("id",data.id);
+            const link = `http://localhost:${process.env.PORT}/resetpassword/${data.id}/${token}`;
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
               host: 'smtp.ethereal.email',
@@ -107,6 +108,22 @@ class userService {
     });
   }
 
+  resetPassword = (resetInfo, callback) => {
+    userModel.resetPassword(resetInfo, (error, data) => {
+      if (data) {
+        const secretkey = data.Password + process.env.SECRET_KEY
+        jwt.verify(resetInfo.token, secretkey, (err, verifiedjwt) => {
+          if (err) {
+            return callback(err, null);
+          } else {
+            return callback(null, verifiedjwt);
+          }
+        });
+      } else {
+        return callback(error, null);
+      }
+    })
+  }
 
 }
 module.exports = new userService();

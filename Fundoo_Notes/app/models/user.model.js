@@ -67,6 +67,11 @@ class userModel {
     }
   };
 
+  /**
+   * Login Function
+   * @param {*} loginData 
+   * @param {*} callback 
+   */
   loginUser = (loginData, callback) => {
     // Checking Email into database present or not
     user.findOne({ email: loginData.email }, (error, data) => {
@@ -80,6 +85,11 @@ class userModel {
     });
   };
 
+  /**
+   * Forget Password function
+   * @param {*} userInfo 
+   * @param {*} callback 
+   */
   forgetPasswordModel = (userInfo, callback) => {
     user.findOne({ email: userInfo.email }, (error, data) => {
       if (error) {
@@ -91,7 +101,32 @@ class userModel {
       }
     });
   }
-  
+
+  /**
+   * Reset Password Function
+   * @param {*} resetInfo 
+   * @param {*} callback 
+   */
+  resetPassword = (resetInfo, callback) => {
+    // Password Hashed
+    helper.hashing(resetInfo.newPassword, (err, hashedPassword) => {
+      if(err){
+        throw err;
+      }
+      else{
+        user.findByIdAndUpdate(resetInfo.id, {Password: hashedPassword}, (error, data) => {
+          if (data) {
+            logger.info('Password Updated successfully');
+            return callback(null, data);
+          } else {
+            logger.info(error);
+            return callback(error, null);
+          }
+        })
+      }
+    })
+  }
+
 }
 
 module.exports = new userModel();
