@@ -14,8 +14,6 @@ class Controller {
    */
   register = (req, res) => {
     try {
-
-      logger.info('controller started');
       const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -105,29 +103,39 @@ class Controller {
     }
   }
 
-  forgotPassword = (req, res) => {
+  /**
+   * Forget Password
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  forgetPassword = (req, res) => {
     try {
-      const info = {
-        email: req.body.email
-      }
-
-      userService.forgotPasswordService(info, (error, data) => {
-        if (error){
+      const info = { email: req.body.email }
+      userService.forgetPasswordService(info, (error, data) => {
+        if (data){
+          logger.info('reset password link sent Successfull');
+          return res.status(200).json({
+            success: true,
+            message: "reset Link has been sent to verified email",
+          });
+          
+        } else {
           return res.status(403).json({
             success: false,
-            data:null,
-            message: 'Incorrect email'
-          })
-        } else {
-          
+            message: "Incorrect email",
+          });
         }
       });
     } catch (error) {
-
-    }
+      return res.status(500).json({
+        success: false,
+        data: null,
+        message: "server-error",
+      });
+      };
   }
   
-
 }
 
 

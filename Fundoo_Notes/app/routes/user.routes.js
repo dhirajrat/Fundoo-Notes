@@ -8,6 +8,6 @@ module.exports = (app) => {
   // Post Login
   app.post('/login', controller.login);
 
-  // Post Login
-  app.post('/forgot-password', controller.forgotPassword);
+  // Post Forgot Password
+  app.post('/forgetpassword', controller.forgetPassword);
 };

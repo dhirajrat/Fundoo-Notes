@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const helper = require("../utility/helper");
+const logger = require('../../logger/logger')
 
 /**
  * Mongoose Schema
@@ -50,6 +51,7 @@ class userModel {
               throw err;
             }
             else{
+              logger.info('password hashed');
               newUser.Password = hashedPassword;
               newUser.save((error, data) => {
                 if (error) {
@@ -69,22 +71,27 @@ class userModel {
     // Checking Email into database present or not
     user.findOne({ email: loginData.email }, (error, data) => {
       if (error) {
+        logger.error('data not found in database');
         return callback(error, null);
       } else {
+        logger.info('data found in database');
         return callback(null, data);
       }
     });
   };
 
-  forgotPasswordModel = (userInfo, callback) => {
-    user.findOne({email: userInfo.email}, (error, data) =>{
-      if(error) {
+  forgetPasswordModel = (userInfo, callback) => {
+    user.findOne({ email: userInfo.email }, (error, data) => {
+      if (error) {
+        logger.error('data not found in database');
         return callback(error, null);
       } else {
+        logger.info('data found in database');
         return callback(null, data);
       }
     });
   }
+  
 }
 
 module.exports = new userModel();
