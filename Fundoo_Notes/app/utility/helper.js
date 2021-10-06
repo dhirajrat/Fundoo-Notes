@@ -23,7 +23,7 @@ class helper {
      * @param {*} callback 
      */
     jwtTokenGenerate = (data, secretkey, callback) => {
-        jwt.sign({id: data._id, firstName: data.firstName, lastName: data.lastName}, secretkey, {expiresIn: '15m'}, (err, token) =>{
+        jwt.sign({id: data._id, firstName: data.firstName, lastName: data.lastName}, secretkey, {expiresIn: '60m'}, (err, token) =>{
             if(err){ return callback("token not generated", null);}
             else {return callback (null, token);}
         });
@@ -44,6 +44,23 @@ class helper {
             console.log(body);
           });
     }
+
+    verifyToken = (req, res, next) => {
+        try {
+          const { token } = req.params;
+          jwt.verify(token, process.env.SECRET_KEY, (err, data) => {
+            if (data) {
+              next();
+            } else {
+              console.log(err);
+            }
+          });
+        } catch (error) {
+          res.status(401).send({
+            error: "Your token has expiered",
+          });
+        }
+      };
 }
 
 module.exports = new helper();

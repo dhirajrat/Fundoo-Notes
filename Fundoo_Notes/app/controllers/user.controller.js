@@ -136,15 +136,13 @@ class Controller {
       };
   }
 
-  resetPassword = (req, res, next) => {
+  resetPassword = (req, res) => {
     try{
-      const {id, token} = req.params;
+      const {id} = req.params;
       const resetInfo = {
         id: id,
-        token: token,
         newPassword: req.body.Password
       }
-      console.log("id: "+resetInfo.id+" token: "+resetInfo.token);
       userService.resetPassword(resetInfo, (error, data) => {
         if (data) {
           return res.status(200).json({
@@ -168,6 +166,5 @@ class Controller {
   }
   
 }
-
 
 module.exports = new Controller();

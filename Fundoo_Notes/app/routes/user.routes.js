@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 const controller = require('../controllers/user.controller');
+const helper = require('../utility/helper');
 
 module.exports = (app) => {
   // Post User Registration
@@ -12,5 +13,5 @@ module.exports = (app) => {
   app.post('/forgetpassword', controller.forgetPassword);
 
   // Post Reset Password
-  app.post('/resetpassword/:id/:token', controller.resetPassword);
+  app.post('/resetpassword/:id/:token', helper.verifyToken, controller.resetPassword);
 };

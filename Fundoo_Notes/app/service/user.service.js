@@ -63,21 +63,21 @@ class userService {
       if(data){
 
         // Generate JWT token
-        const secretkey = data.Password + process.env.SECRET_KEY
+        const secretkey = process.env.SECRET_KEY
         helper.jwtTokenGenerate(data.Password, secretkey, (err, token) =>{
           if(token){
-
+            
             console.log("id",data.id);
             const link = `http://localhost:${process.env.PORT}/resetpassword/${data.id}/${token}`;
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
-              host: 'smtp.ethereal.email',
-              port: 587,
-              secure: false, // true for 465, false for other ports
-              // service: "gmail",
+              // host: 'smtp.ethereal.email',
+              // port: 587,
+              // secure: false, // true for 465, false for other ports
+              service: "gmail",
               auth: {
-                user: process.env.NODEMAILER_TEST_USER, // generated ethereal user
-                pass: process.env.NODEMAILER_TEST_PASS, // generated ethereal password
+                user: process.env.NODEMAILER_G_USER, // generated ethereal user
+                pass: process.env.NODEMAILER_G_PASS, // generated ethereal password
               },
             });
 
@@ -111,14 +111,7 @@ class userService {
   resetPassword = (resetInfo, callback) => {
     userModel.resetPassword(resetInfo, (error, data) => {
       if (data) {
-        const secretkey = data.Password + process.env.SECRET_KEY
-        jwt.verify(resetInfo.token, secretkey, (err, verifiedjwt) => {
-          if (err) {
-            return callback(err, null);
-          } else {
-            return callback(null, verifiedjwt);
-          }
-        });
+        return callback(null, data);
       } else {
         return callback(error, null);
       }
