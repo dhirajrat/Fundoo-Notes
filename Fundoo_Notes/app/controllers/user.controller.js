@@ -87,7 +87,7 @@ class Controller {
           return res.status(200).json({
             success: true,
             message: "login successfull",
-            token: data,
+            // token: data,
           });
         }
       });
@@ -121,6 +121,7 @@ class Controller {
           });
           
         } else {
+          logger.error(error);
           return res.status(403).json({
             success: false,
             message: "Incorrect email",
@@ -136,23 +137,33 @@ class Controller {
       };
   }
 
+  /**
+   * Reset Password
+  */
   resetPassword = (req, res) => {
     try{
-      const {id} = req.params;
+      // const {id} = req.params;
+      const header = req.headers.authorization;
+
+      const myArr = header.split(" ");
+      console.log("head: "+header);
+      const token = myArr[1];
       const resetInfo = {
-        id: id,
+        token: token,
         newPassword: req.body.Password
       }
       userService.resetPassword(resetInfo, (error, data) => {
         if (data) {
+          logger.info('Password reset');
           return res.status(200).json({
             success: true,
             message: "Password reset",
           });
         } else {
+          logger.error(error);
           return res.status(403).json({
             success: false,
-            message: "Link Expired",
+            message: error,
           });
         }
       })

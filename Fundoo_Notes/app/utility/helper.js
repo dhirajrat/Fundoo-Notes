@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mailgun = require("mailgun-js");
+const logger = require('../../logger/logger')
 const DOMAIN = process.env.MAILER_DOMAIN;
 const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
 
@@ -12,8 +13,13 @@ class helper {
      */
     hashing = (password, callback) => {
         bcrypt.hash(password, 10, (err, hashedpassword) => {
-            if(err) { return callback("Error in hashing", null); }
-            else { return callback(null, hashedpassword); }
+            if(err) {
+              return callback("Error in hashing", null);
+            }
+            else {
+              logger.info("Password Hashed");
+              return callback(null, hashedpassword);
+            }
         });
     }
 
@@ -23,7 +29,7 @@ class helper {
      * @param {*} callback 
      */
     jwtTokenGenerate = (data, secretkey, callback) => {
-        jwt.sign({id: data._id, firstName: data.firstName, lastName: data.lastName}, secretkey, {expiresIn: '60m'}, (err, token) =>{
+        jwt.sign({id: data.id, firstName: data.firstName, lastName: data.lastName, email: data.email}, secretkey, {expiresIn: '4000m'}, (err, token) =>{
             if(err){ return callback("token not generated", null);}
             else {return callback (null, token);}
         });
@@ -45,14 +51,41 @@ class helper {
           });
     }
 
+    /**
+     * Decode Token
+     * @param {*} token 
+     * @param {*} callback 
+     * @returns 
+     */
+    decodeToken = (token, callback) => {
+      const decode = jwt.verify(token, process.env.SECRET_KEY);
+      if (decode) {
+        return callback(null, decode);
+      } else {
+        return callback('Cannot Decode token', null);
+      }
+    }
+
+    /**
+     * Verify Token function
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     verifyToken = (req, res, next) => {
         try {
-          const { token } = req.params;
-          jwt.verify(token, process.env.SECRET_KEY, (err, data) => {
-            if (data) {
+          const header = req.headers.authorization;
+          const myArr = header.split(" ");
+          console.log("head: "+header);
+          const token = myArr[1];
+          this.decodeToken(token, (error, decode) => {
+            if (decode) {
+              console.log("help ver token decode mail"+decode.email+" id "+decode.id);
+              logger.info("token verified");
               next();
             } else {
-              console.log(err);
+              logger.info("token verify error");
+              console.log("token verify error");
             }
           });
         } catch (error) {

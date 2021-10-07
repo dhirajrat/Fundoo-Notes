@@ -39,6 +39,7 @@ class userService {
         } else {
           // Generate JWT token
           const secretkey = process.env.SECRET_KEY
+          console.log("login ser: "+data);
           helper.jwtTokenGenerate(data, secretkey, (err, token) =>{
             if(token){
               return callback(null, token);
@@ -62,18 +63,16 @@ class userService {
     userModel.forgetPasswordModel(userInfo, (error, data) => {
       if(data){
 
+        console.log("data ser: "+data);
         // Generate JWT token
         const secretkey = process.env.SECRET_KEY
-        helper.jwtTokenGenerate(data.Password, secretkey, (err, token) =>{
+        helper.jwtTokenGenerate(data, secretkey, (err, token) =>{
           if(token){
-            
-            console.log("id",data.id);
-            const link = `http://localhost:${process.env.PORT}/resetpassword/${data.id}/${token}`;
+            console.log("service forget id and token : ",data.id," ",token);
+
+            const link = `http://localhost:${process.env.PORT}/resetpassword/${token}`;
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
-              // host: 'smtp.ethereal.email',
-              // port: 587,
-              // secure: false, // true for 465, false for other ports
               service: "gmail",
               auth: {
                 user: process.env.NODEMAILER_G_USER, // generated ethereal user
@@ -87,7 +86,7 @@ class userService {
               to: data.email, // list of receivers
               subject: "Reset Password - Fundoo notes account", // Subject line
               text: `Hello ${data.firstName}.`, // plain text body
-              html: `<b>Hello ${data.firstName}. Here is your link to reset Password: <a href="${link}">reset password</a></b>`, // html body
+              html: `<b>Hello ${data.firstName}. Here is your link to reset Password: <button href="${link}"> <a href="${link}">reset password</a></button></b>`, // html body
             });
 
             console.log("Message sent: %s", info.messageId);

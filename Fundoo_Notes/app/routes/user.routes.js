@@ -13,5 +13,5 @@ module.exports = (app) => {
   app.post('/forgetpassword', controller.forgetPassword);
 
   // Post Reset Password
-  app.post('/resetpassword/:id/:token', helper.verifyToken, controller.resetPassword);
+  app.post('/resetpassword', helper.verifyToken, controller.resetPassword);
 };

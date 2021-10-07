@@ -33,10 +33,13 @@ const userSchema = mongoose.Schema(
 
 const user = mongoose.model("user", userSchema);
 
-/**
- * Check User Exist, If not then save the data into database
- */
 class userModel {
+  /**
+   * Check User Exist, If not then save the data into database
+   * @param {*} userDetails 
+   * @param {*} callback 
+   * @returns 
+   */
   registerUser = (userDetails, callback) => {
     const newUser = new user({
       firstName: userDetails.firstName,
@@ -114,15 +117,21 @@ class userModel {
         throw err;
       }
       else{
-        user.findByIdAndUpdate(resetInfo.id, {Password: hashedPassword}, (error, data) => {
+        helper.decodeToken(resetInfo.token, (error, data) => {
           if (data) {
-            logger.info('Password Updated successfully');
-            return callback(null, data);
+            user.findByIdAndUpdate(data.id, {Password: hashedPassword}, (error, data) => {
+              if (data) {
+                logger.info('Password Updated successfully');
+                return callback(null, data);
+              } else {
+                logger.info(error);
+                return callback(error, null);
+              }
+            });
           } else {
-            logger.info(error);
             return callback(error, null);
           }
-        })
+        });
       }
     })
   }
