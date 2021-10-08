@@ -22,7 +22,7 @@ describe('login tests:', () => {
       .end((err, res) => {
         res.should.have.status(200);
         if (err) {
-          return done(error);
+          return done(err);
         }
       });
     done();
@@ -37,7 +37,7 @@ describe('login tests:', () => {
       .end((err, res) => {
         res.should.have.status(403);
         if (err) {
-          return done(error);
+          return done(err);
         }
       });
     done();

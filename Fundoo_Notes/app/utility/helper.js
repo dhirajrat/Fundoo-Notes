@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mailgun = require("mailgun-js");
+const nodemailer = require("nodemailer");
 const logger = require('../../logger/logger')
 const DOMAIN = process.env.MAILER_DOMAIN;
 const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
@@ -40,15 +41,27 @@ class helper {
      * @param {*} data 
      */
     sendWelcomeMail = (data) => {
-        const edata = {
-            from: 'no-reply@fundoonotes.com',
-            to: data.email,
-            subject: 'Welcome to fundoonotes',
-            text: 'Hello '+data.firstName+' Your Account registered to fundoo notes successfully'
-          };
-          mg.messages().send(edata, function (error, body) {
-            console.log(body);
-          });
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.NODEMAILER_G_USER, // generated ethereal user
+          pass: process.env.NODEMAILER_G_PASS, // generated ethereal password
+        },
+      });
+
+      // send mail with defined transport object
+      let info = transporter.sendMail({
+        from: '"Fundoo Notes" <no-reply@fundoonotes.com>', // sender address
+        to: data.email, // list of receivers
+        subject: "Welcome - Fundoo notes account", // Subject line
+        text: `Hello ${data.firstName}.`, // plain text body
+        html: `<b>Hello ${data.firstName} Welcome - Fundoo notes. your account Has been created successfully</b>`, // html body
+      });
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }
 
     /**

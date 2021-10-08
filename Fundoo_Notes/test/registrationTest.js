@@ -22,7 +22,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(201);
         if (err) {
-          return done(error);
+          return done(err);
         }
       });
     done();
@@ -37,7 +37,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(400);
         if (err) {
-          return done(error);
+          return done(err);
         }
       });
     done();
@@ -52,7 +52,7 @@ describe('Registration tests :', () => {
       .end((err, res) => {
         res.should.have.status(400);
         if (err) {
-          return done(error);
+          return done(err);
         }
       });
     done();
