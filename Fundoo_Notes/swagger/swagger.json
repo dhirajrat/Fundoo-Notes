@@ -44,18 +44,6 @@
                 "email": "dhirajrat@gmail.com",
                 "Password": "AbcdS@34#5.35"
             }
-        },
-        "forgetInfo": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "description": "Email ID"
-                }
-            },
-            "example": {
-                "email": "dhirajrat@gmail.com"
-            }
         }
     },
     "info": {
@@ -132,41 +120,6 @@
                         "description": "login with Ligin Info",
                         "schema": {
                             "$ref": "#definitions/loginInfo"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "schema": {
-                    "$ref": "#definitions/userInfo"
-                },
-                "responses": {
-                    "200": {
-                        "description": "Link Send Success"
-                    },
-                    "403": {
-                        "description": "Incorrect info Unable to send link"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/forgetpassword": {
-            "post": {
-                "tags": [
-                    "User Forget Password"
-                ],
-                "description": "If registered then You can recovered forget Password using Email",
-                "parameters": [
-                    {
-                        "name": "User Forget Password",
-                        "in": "body",
-                        "description": "Recover Password with Info",
-                        "schema": {
-                            "$ref": "#definitions/forgetInfo"
                         }
                     }
                 ],

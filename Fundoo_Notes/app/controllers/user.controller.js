@@ -56,13 +56,7 @@ class Controller {
           });
         }
   };
-  
-/**
- * Login User
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
+
   login = (req, res) => {
     try {
       const loginInfo = {
@@ -145,10 +139,7 @@ class Controller {
 
   /**
    * Reset Password
-   * @param {*} req 
-   * @param {*} res 
-   * @returns 
-   */
+  */
   resetPassword = (req, res) => {
     try{
       // const {id} = req.params;
