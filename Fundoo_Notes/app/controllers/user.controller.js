@@ -151,12 +151,6 @@ class Controller {
    */
   resetPassword = (req, res) => {
     try{
-      // const {id} = req.params;
-      const header = req.headers.authorization;
-
-      const myArr = header.split(" ");
-      console.log("head: "+header);
-      const token = myArr[1];
       console.log("160 "+req.userData.email+" "+req.userData.id);
       const resetInfo = {
         email: req.userData.email,
@@ -172,7 +166,7 @@ class Controller {
           });
         } else {
           logger.error(error);
-          return res.status(403).json({
+          return res.status(401).json({
             success: false,
             message: error,
           });

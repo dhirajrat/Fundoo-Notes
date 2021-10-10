@@ -56,6 +56,18 @@
             "example": {
                 "email": "dhirajrat@gmail.com"
             }
+        },
+        "resetpassword": {
+            "type": "object",
+            "properties": {
+                "Password": {
+                    "type": "string",
+                    "description": "new password for user."
+                }
+            },
+            "example": {
+                "Password": "Asds521@#df"
+            }
         }
     },
     "info": {
@@ -185,6 +197,46 @@
                     },
                     "500": {
                         "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/resetpassword": {
+            "post": {
+                "tags": [
+                    "reset password"
+                ],
+                "description": "Already registered ? Then reset password successfully !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Reset Password",
+                        "in": "body",
+                        "description": "Reset Password with token",
+                        "schema": {
+                            "$ref": "#/definitions/resetpassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "reset password succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Password for reset password"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }

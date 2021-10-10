@@ -5,6 +5,7 @@
 /* eslint-disable linebreak-style */
 const chai = require('chai');
 const chaihttp = require('chai-http');
+const faker = require('faker');
 const server = require('../server');
 const test = require('./user.json');
 
@@ -13,8 +14,14 @@ chai.should();
 chai.use(chaihttp);
 
 describe('Registration tests :', () => {
-  it('for given data returned status should (201) after posting data', (done) => {
-    const user = test.user.registerAuth;
+  it.only('for given data returned status should (201) after posting data', (done) => {
+    // const user = test.user.registerAuth;
+    const user = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName(),
+      email: faker.internet.email(),
+      Password: 'AbcdS@34#5.35',
+    };
     chai
       .request(server)
       .post('/register')
