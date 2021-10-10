@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../models/user.model.js");
 const helper = require("../utility/helper.js");
 const logger = require('../../logger/logger');
-const sendLinkMail = require('../utility/sendresetlink')
+const sendLinkMail = require('../utility/sendresetlink');
 class userService {
   /**
    * Register User
@@ -55,7 +55,9 @@ class userService {
   };
 
   /**
-   * Forget Password function
+   * Forget Password Service
+   * @param {*} userInfo 
+   * @param {*} callback 
    */
   forgetPasswordService = (userInfo, callback) => {
     userModel.forgetPasswordModel(userInfo, (error, data) => {
@@ -81,6 +83,11 @@ class userService {
     });
   }
 
+  /**
+   * Reset Password
+   * @param {*} resetInfo 
+   * @param {*} callback 
+   */
   resetPassword = (resetInfo, callback) => {
     userModel.resetPassword(resetInfo, (error, data) => {
       if (data) {

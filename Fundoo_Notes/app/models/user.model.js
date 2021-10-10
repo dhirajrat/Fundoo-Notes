@@ -117,9 +117,7 @@ class userModel {
         throw err;
       }
       else{
-        helper.decodeToken(resetInfo.token, (error, data) => {
-          if (data) {
-            user.findByIdAndUpdate(data.id, {Password: hashedPassword}, (error, data) => {
+            user.findByIdAndUpdate(resetInfo.id, {Password: hashedPassword}, (error, data) => {
               if (data) {
                 logger.info('Password Updated successfully');
                 return callback(null, data);
@@ -128,10 +126,6 @@ class userModel {
                 return callback(error, null);
               }
             });
-          } else {
-            return callback(error, null);
-          }
-        });
       }
     })
   }

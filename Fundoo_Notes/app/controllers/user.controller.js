@@ -157,8 +157,10 @@ class Controller {
       const myArr = header.split(" ");
       console.log("head: "+header);
       const token = myArr[1];
+      console.log("160 "+req.userData.email+" "+req.userData.id);
       const resetInfo = {
-        token: token,
+        email: req.userData.email,
+        id: req.userData.id,
         newPassword: req.body.Password
       }
       userService.resetPassword(resetInfo, (error, data) => {

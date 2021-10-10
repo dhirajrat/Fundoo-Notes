@@ -1,10 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const mailgun = require("mailgun-js");
 const nodemailer = require("nodemailer");
 const logger = require('../../logger/logger')
-const DOMAIN = process.env.MAILER_DOMAIN;
-const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
+
 
 class helper {
     /**
@@ -65,21 +63,6 @@ class helper {
     }
 
     /**
-     * Decode Token
-     * @param {*} token 
-     * @param {*} callback 
-     * @returns 
-     */
-    decodeToken = (token, callback) => {
-      const decode = jwt.verify(token, process.env.SECRET_KEY);
-      if (decode) {
-        return callback(null, decode);
-      } else {
-        return callback('Cannot Decode token', null);
-      }
-    }
-
-    /**
      * Verify Token function
      * @param {*} req 
      * @param {*} res 
@@ -91,16 +74,16 @@ class helper {
           const myArr = header.split(" ");
           console.log("head: "+header);
           const token = myArr[1];
-          this.decodeToken(token, (error, decode) => {
+            const decode = jwt.verify(token, process.env.SECRET_KEY);
             if (decode) {
               console.log("help ver token decode mail"+decode.email+" id "+decode.id);
               logger.info("token verified");
+              req.userData = decode;
               next();
             } else {
               logger.info("token verify error");
               console.log("token verify error");
             }
-          });
         } catch (error) {
           res.status(401).send({
             error: "Your token has expiered",
