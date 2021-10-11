@@ -70,5 +70,22 @@ class Service {
     );
   }
 
+  /**
+   * Delete Note By Note Id
+   * @param {*} data 
+   * @param {*} callback 
+   */
+  deleteNoteById = async (data, callback) => {
+    await noteModel.deleteNoteById(data, (error, data) => {
+      if (error) {
+        logger.error(error);
+        return callback(error, null);
+      } else {
+        return callback(null, data);
+      }
+    }
+    );
+  }
+
 }
 module.exports = new Service();

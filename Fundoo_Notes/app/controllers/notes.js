@@ -52,7 +52,6 @@ class Note {
         const userId = {
             userId: req.userData.id
         }
-        console.log("49"+userId.userId);
         noteService.getAllNotes(userId, (error, data) => {
             if (error) {
                 return res.send({success: false, message: "Notes Not Retrieved!", data: error})
@@ -82,7 +81,6 @@ class Note {
                 userId: req.userData.id,
                 noteId: req.params.id
             }
-            console.log("73 "+ids.userId+" "+ids.noteId);
             noteService.getNoteById(ids, (error, data) => {
                 if (error) {
                     return res.send({success: false, message: "Notes Not Retrieved!", data: error})
@@ -114,13 +112,42 @@ class Note {
                 userId: req.userData.id,
                 noteId: req.params.id
             }
-            console.log("73 "+idanddata.userId+" "+idanddata.noteId);
             noteService.updateNoteById(idanddata, (error, data) => {
                 if (error) {
                     return res.send({success: false, message: "Notes Not Updated!", data: error})
                 } else {
-                    logger.info('Notes Found Successfully');
+                    logger.info('Notes Updated Successfully');
                     return res.send({success: true, message: "Notes Updated!", data: data})
+                }
+            });
+            } catch {
+                logger.error('Internal server error');
+                return res.status(500).json({
+                    message: 'Internal server error',
+                    success: false
+                });
+            }
+    }
+
+    /**
+     * Delete Note By Note Id
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
+    deleteNoteById = async (req, res) => {
+        try {
+            const idanddata = {
+                userId: req.userData.id,
+                noteId: req.params.id
+            }
+            console.log("73 "+idanddata.userId+" "+idanddata.noteId);
+            await noteService.deleteNoteById(idanddata, (error, data) => {
+                if (error) {
+                    return res.send({success: false, message: "Note Not Deleted!", data: error})
+                } else {
+                    logger.info('Notes Deleted Successfully');
+                    return res.send({success: true, message: "Notes Deleted!", data: data})
                 }
             });
             } catch {

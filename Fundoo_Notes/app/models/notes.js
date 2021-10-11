@@ -82,10 +82,7 @@ class Model {
     updateNoteById = (notedata, callback) => {
       console.log("46 "+notedata.userId+" "+notedata.noteId);
       Notes.find({$and:[{userId: notedata.userId},{_id:notedata.noteId}]}, (error, data) => {
-        if (error) {
-          logger.error(error);
-          return callback(error, null);
-        } else {
+        if (data.length === 1) {
           Notes.findByIdAndUpdate({_id: notedata.noteId}, {
             title: notedata.title,
             description: notedata.description
@@ -96,6 +93,32 @@ class Model {
               return callback(null, data);
             }
           });
+        } else {
+          logger.error(error);
+          return callback(error, null);
+        }
+      });
+    }
+
+    /**
+     * Delete Note By Note Id
+     * @param {*} notedata 
+     * @param {*} callback 
+     */
+    deleteNoteById = (notedata, callback) => {
+      console.log("46 "+notedata.userId+" "+notedata.noteId);
+      Notes.find({$and:[{userId: notedata.userId},{_id:notedata.noteId}]}, (error, data) => {
+        if (data.length === 1) {
+          Notes.findByIdAndDelete({_id: notedata.noteId}, (error, data) => {
+            if (error) {
+              return callback(error, null);
+            } else {
+              return callback(null, data);
+            }
+          });
+        } else {
+          logger.error(error);
+          return callback(error, null);
         }
       });
     }

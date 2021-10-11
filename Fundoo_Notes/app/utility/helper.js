@@ -28,7 +28,7 @@ class helper {
      * @param {*} callback 
      */
     jwtTokenGenerate = (data, secretkey, callback) => {
-        jwt.sign({id: data.id, email: data.email}, secretkey, {expiresIn: '1h'}, (err, token) =>{
+        jwt.sign({id: data.id, email: data.email}, secretkey, {expiresIn: '24h'}, (err, token) =>{
             if(err){ return callback("token not generated", null);}
             else {return callback (null, token);}
         });
