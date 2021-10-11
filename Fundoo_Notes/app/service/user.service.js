@@ -40,6 +40,7 @@ class userService {
           console.log("login ser: "+data);
           helper.jwtTokenGenerate(data, secretkey, (err, token) =>{
             if(token){
+              console.log("Token 43 ::: "+token);
               return callback(null, token);
             }
             else {
@@ -65,7 +66,7 @@ class userService {
 
         console.log("data ser: "+data);
         // Generate JWT token
-        const secretkey = process.env.SECRET_KEY
+        const secretkey = process.env.SECRET_KEY_FOR_RESET
         helper.jwtTokenGenerate(data, secretkey, (err, token) =>{
           if(token){
             console.log("service forget id and token : ",data.id," ",token);

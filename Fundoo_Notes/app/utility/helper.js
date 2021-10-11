@@ -28,7 +28,7 @@ class helper {
      * @param {*} callback 
      */
     jwtTokenGenerate = (data, secretkey, callback) => {
-        jwt.sign({id: data.id, firstName: data.firstName, lastName: data.lastName, email: data.email}, secretkey, {expiresIn: '4000m'}, (err, token) =>{
+        jwt.sign({id: data.id, email: data.email}, secretkey, {expiresIn: '1h'}, (err, token) =>{
             if(err){ return callback("token not generated", null);}
             else {return callback (null, token);}
         });
@@ -86,7 +86,36 @@ class helper {
             }
         } catch (error) {
           res.status(401).send({
-            error: "Your token has expiered",
+            error: "Your token has been expired",
+          });
+        }
+      };
+
+      /**
+       * Verify Token For Reset
+       * @param {*} req 
+       * @param {*} res 
+       * @param {*} next 
+       */
+      verifyTokenForReset = (req, res, next) => {
+        try {
+          const header = req.headers.authorization;
+          const myArr = header.split(" ");
+          console.log("head: "+header);
+          const token = myArr[1];
+            const decode = jwt.verify(token, process.env.SECRET_KEY_FOR_RESET);
+            if (decode) {
+              console.log("help ver token decode mail"+decode.email+" id "+decode.id);
+              logger.info("token verified");
+              req.userData = decode;
+              next();
+            } else {
+              logger.info("token verify error");
+              console.log("token verify error");
+            }
+        } catch (error) {
+          res.status(401).send({
+            error: "Your token has been expired",
           });
         }
       };

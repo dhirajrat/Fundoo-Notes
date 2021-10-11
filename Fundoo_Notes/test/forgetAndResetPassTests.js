@@ -42,6 +42,21 @@ describe('Forgot Password tests :', () => {
       });
     done();
   });
+
+  it('for given forgot password data returned status should (200) after posting data', (done) => {
+    const user = test.user.forgotMail;
+    chai
+      .request(server)
+      .post('/forgetpassword')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(200);
+        if (err) {
+          return done(err);
+        }
+      });
+    done();
+  });
 });
 
 describe('Reset Password tests :', () => {
@@ -72,6 +87,23 @@ describe('Reset Password tests :', () => {
       .send(userPass)
       .end((err, res) => {
         res.should.have.status(401);
+        if (err) {
+          return done(err);
+        }
+      });
+    done();
+  });
+
+  it('for given Reset password data returned status should (200) after posting data', (done) => {
+    const userToken = test.user.resetDataToken;
+    const userPass = test.user.resetDataPass;
+    chai
+      .request(server)
+      .post('/resetpassword')
+      .set({ authorization: userToken })
+      .send(userPass)
+      .end((err, res) => {
+        res.should.have.status(200);
         if (err) {
           return done(err);
         }
