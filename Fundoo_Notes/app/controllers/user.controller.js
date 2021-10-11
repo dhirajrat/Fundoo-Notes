@@ -93,7 +93,7 @@ class Controller {
           return res.status(200).json({
             success: true,
             message: "login successfull",
-            // token: data,
+            token: data,
           });
         }
       });

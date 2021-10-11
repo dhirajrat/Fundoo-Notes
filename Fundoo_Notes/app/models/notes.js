@@ -41,6 +41,41 @@ class Model {
         }
       });
     }
+
+    /**
+     * Get All Notes
+     * @param {*} userId 
+     * @param {*} callback 
+     */
+    getAllNotes = (userId, callback) => {
+      console.log("46"+userId.id);
+      Notes.find({ userId: userId.userId }, (error, data) => {
+        if (error) {
+          logger.error(error);
+          return callback(error, null);
+        } else {
+          return callback(null, data);
+        }
+      });
+    }
+
+    /**
+     * Get Notes By NoteId
+     * @param {*} ids 
+     * @param {*} callback 
+     */
+    getNoteById = (ids, callback) => {
+      console.log("46 "+ids.userId+" "+ids.noteId);
+      Notes.find({$and:[{userId: ids.userId},{_id:ids.noteId}]}, (error, data) => {
+        if (error) {
+          logger.error(error);
+          return callback(error, null);
+        } else {
+          return callback(null, data);
+        }
+      });
+    }
+
 }
 
   module.exports = new Model();

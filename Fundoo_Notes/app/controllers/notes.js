@@ -34,12 +34,72 @@ class Note {
             })
         } catch {
         logger.error('Internal server error');
-        return res.status(500).json({
-            message: 'Internal server error',
-            success: false
-        });
+            return res.status(500).json({
+                message: 'Internal server error',
+                success: false
+            });
         }
     }
+
+    /**
+     * Get All Notes
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
+    getAllNotes = (req, res) => {
+        try { 
+        const userId = {
+            userId: req.userData.id
+        }
+        console.log("49"+userId.userId);
+        noteService.getAllNotes(userId, (error, data) => {
+            if (error) {
+                return res.send()
+            } else {
+                logger.info('Notes Found Successfully');
+                return res.send({success: true, message: "Notes Retrieved!", data: data})
+            }
+        });
+        } catch {
+            logger.error('Internal server error');
+            return res.status(500).json({
+                message: 'Internal server error',
+                success: false
+            });
+        }
+    }
+
+    /**
+     * Get Note By NoteID
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
+    getNoteById = (req, res) => {
+        try {
+            const ids = {
+                userId: req.userData.id,
+                noteId: req.params.id
+            }
+            console.log("73 "+ids.userId+" "+ids.noteId);
+            noteService.getNoteById(ids, (error, data) => {
+                if (error) {
+                    return res.send()
+                } else {
+                    logger.info('Notes Found Successfully');
+                    return res.send({success: true, message: "Notes Retrieved!", data: data})
+                }
+            });
+            } catch {
+                logger.error('Internal server error');
+                return res.status(500).json({
+                    message: 'Internal server error',
+                    success: false
+                });
+            }
+    }
+
 }
 
 module.exports = new Note();
