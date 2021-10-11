@@ -22,6 +22,9 @@ module.exports = (app) => {
   // Get Notes
   app.get('/getallnotes', helper.verifyToken, noteController.getAllNotes);
 
-  // Get Notes
+  // Get Notes by Id
   app.get('/getnotesbyid/:id', helper.verifyToken, noteController.getNoteById);
+
+  // Update Note by Id
+  app.get('/updatenotesbyid/:id', helper.verifyToken, noteController.updateNoteById);
 };

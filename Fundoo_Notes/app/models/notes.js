@@ -76,6 +76,30 @@ class Model {
       });
     }
 
+    /**
+     * Update Note By Note ID
+     */
+    updateNoteById = (notedata, callback) => {
+      console.log("46 "+notedata.userId+" "+notedata.noteId);
+      Notes.find({$and:[{userId: notedata.userId},{_id:notedata.noteId}]}, (error, data) => {
+        if (error) {
+          logger.error(error);
+          return callback(error, null);
+        } else {
+          Notes.findByIdAndUpdate({_id: notedata.noteId}, {
+            title: notedata.title,
+            description: notedata.description
+          }, { new : true}, (error, data) => {
+            if (error) {
+              return callback(error, null);
+            } else {
+              return callback(null, data);
+            }
+          });
+        }
+      });
+    }
+
 }
 
   module.exports = new Model();

@@ -55,7 +55,7 @@ class Note {
         console.log("49"+userId.userId);
         noteService.getAllNotes(userId, (error, data) => {
             if (error) {
-                return res.send()
+                return res.send({success: false, message: "Notes Not Retrieved!", data: error})
             } else {
                 logger.info('Notes Found Successfully');
                 return res.send({success: true, message: "Notes Retrieved!", data: data})
@@ -85,10 +85,42 @@ class Note {
             console.log("73 "+ids.userId+" "+ids.noteId);
             noteService.getNoteById(ids, (error, data) => {
                 if (error) {
-                    return res.send()
+                    return res.send({success: false, message: "Notes Not Retrieved!", data: error})
                 } else {
                     logger.info('Notes Found Successfully');
                     return res.send({success: true, message: "Notes Retrieved!", data: data})
+                }
+            });
+            } catch {
+                logger.error('Internal server error');
+                return res.status(500).json({
+                    message: 'Internal server error',
+                    success: false
+                });
+            }
+    }
+
+    /**
+     * Update Note By Note ID
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
+    updateNoteById = (req, res) => {
+        try {
+            const idanddata = {
+                title: req.body.title,
+                description: req.body.description,
+                userId: req.userData.id,
+                noteId: req.params.id
+            }
+            console.log("73 "+idanddata.userId+" "+idanddata.noteId);
+            noteService.updateNoteById(idanddata, (error, data) => {
+                if (error) {
+                    return res.send({success: false, message: "Notes Not Updated!", data: error})
+                } else {
+                    logger.info('Notes Found Successfully');
+                    return res.send({success: true, message: "Notes Updated!", data: data})
                 }
             });
             } catch {
