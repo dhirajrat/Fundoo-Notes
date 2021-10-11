@@ -14,7 +14,7 @@ chai.should();
 chai.use(chaihttp);
 
 describe('Registration tests :', () => {
-  it.only('for given data returned status should (201) after posting data', (done) => {
+  it('for given data returned status should (201) after posting data', (done) => {
     // const user = test.user.registerAuth;
     const user = {
       firstName: faker.name.firstName(),

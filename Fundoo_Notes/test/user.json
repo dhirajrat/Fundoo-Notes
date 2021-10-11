@@ -28,6 +28,16 @@
         "incorrectloginData" : {
             "email": "ssmsadsddl@gmail.com",
             "Password": "AbytefhsgdS@34#5.35"
-        }
+        },
+        "forgotMail" : {
+            "email": "dhirajrathod5000@gmail.com"
+        },
+        "resetDataPass" : {
+            "Password": "AbytefhsgdS@34#5.35"
+        },
+        "resetDataTokenInvalid" : 
+            "bearer eyJhbGciOiJIUzI1NiIsInR5dCI6IkpXVCJ9.eyJpZCI6IjYxNWNiNzAwZDVkZTZjNmIwODg4MDU0NiIsImZpcnN0TmFtZSI6IktpcmFqIiwibGFzdE5hbWUiOiJTaGluZGUiLCJlbWFpbCI6ImRoaXJhanJhdGhvZDUwMDBAZ21haWwuY29tIiwiaWF0IjoxNjMzODU5MDQ2LCJleHAiOjE2MzQwOTkwNDZ9.KWNLyEkoV5wbYz3HG948wZ7plC7cpZ0OqkvalQdi19I",
+        "resetDataToken" : 
+            "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNWNiMzAwZDVkZTZjNmIwODg4MDU0NiIsImZpcnN0TmFtZSI6IktpcmFqIiwibGFzdE5hbWUiOiJTaGluZGUiLCJlbWFpbCI6ImRoaXJhanJhdGhvZDUwMDBAZ21haWwuY29tIiwiaWF0IjoxNjMzODU5MDQ2LCJleHAiOjE2MzQwOTkwNDZ9.KWNLyEkoV5wbYz3HG948wZ7plC7cpZ0OqkvalQdi19I"
     }
 }
