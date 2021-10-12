@@ -48,7 +48,7 @@ class Model {
      * @param {*} callback 
      */
     getAllNotes = (userId, callback) => {
-      console.log("46"+userId.id);
+      console.log("46 "+userId.userId);
       Notes.find({ userId: userId.userId }, (error, data) => {
         if (error) {
           logger.error(error);
@@ -65,8 +65,7 @@ class Model {
      * @param {*} callback 
      */
     getNoteById = (ids, callback) => {
-      console.log("46 "+ids.userId+" "+ids.noteId);
-      Notes.find({$and:[{userId: ids.userId},{_id:ids.noteId}]}, (error, data) => {
+      Notes.find({_id:ids.noteId, userId: ids.userId}, (error, data) => {
         if (error) {
           logger.error(error);
           return callback(error, null);
@@ -80,24 +79,17 @@ class Model {
      * Update Note By Note ID
      */
     updateNoteById = (notedata, callback) => {
-      console.log("46 "+notedata.userId+" "+notedata.noteId);
-      Notes.find({$and:[{userId: notedata.userId},{_id:notedata.noteId}]}, (error, data) => {
-        if (data.length === 1) {
-          Notes.findByIdAndUpdate({_id: notedata.noteId}, {
+          Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
             title: notedata.title,
             description: notedata.description
           }, { new : true}, (error, data) => {
             if (error) {
+              logger.error(error);
               return callback(error, null);
             } else {
               return callback(null, data);
             }
           });
-        } else {
-          logger.error(error);
-          return callback(error, null);
-        }
-      });
     }
 
     /**
@@ -106,21 +98,13 @@ class Model {
      * @param {*} callback 
      */
     deleteNoteById = (notedata, callback) => {
-      console.log("46 "+notedata.userId+" "+notedata.noteId);
-      Notes.find({$and:[{userId: notedata.userId},{_id:notedata.noteId}]}, (error, data) => {
-        if (data.length === 1) {
-          Notes.findByIdAndDelete({_id: notedata.noteId}, (error, data) => {
+          Notes.findOneAndDelete({_id: notedata.noteId, userId: notedata.userId}, (error, data) => {
             if (error) {
               return callback(error, null);
             } else {
               return callback(null, data);
             }
           });
-        } else {
-          logger.error(error);
-          return callback(error, null);
-        }
-      });
     }
 
 }
