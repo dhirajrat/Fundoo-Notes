@@ -49,11 +49,11 @@ class Model {
           title: info.title,
           description: info.description
         });
-        console.log("52 "+info.title+" "+info.userId);
-        note.save().then((data) => {
-          console.log("54 "+data.title);
+        note.save()
+        .then((data) => {
           resolve(data)
-        }).catch(() => reject());
+        })
+        .catch(() => reject());
       })
     }
 
@@ -62,10 +62,10 @@ class Model {
      * @param {*} userId 
      * @param {*} callback 
      */
-    getAllNotes = (userId) => {
+    getAllNotes = (user) => {
       return new Promise((resolve, reject) => {
-        console.log("46 "+userId.userId);
-        Notes.find({ userId: userId.userId }).then((data) => resolve(data))
+        console.log("46 "+user.userId);
+        Notes.find({ userId: user.userId }).then((data) => resolve(data))
         .catch(() => reject());
       })
 
@@ -76,8 +76,40 @@ class Model {
      * @param {*} ids 
      * @param {*} callback 
      */
-    getNoteById = (ids, callback) => {
-      Notes.find({_id:ids.noteId, userId: ids.userId}, (error, data) => {
+    getNoteById = (ids) => {
+      return new Promise((resolve, reject) => {
+        Notes.find({_id:ids.noteId, userId: ids.userId})
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      })
+    }
+
+    /**
+     * Update Note By Note ID
+     */
+    // updateNoteById = (notedata, callback) => {
+    //       Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
+    //         title: notedata.title,
+    //         description: notedata.description
+    //       }, { new : true}, (error, data) => {
+    //         if (error) {
+    //           logger.error(error);
+    //           return callback(error, null);
+    //         } else {
+    //           return callback(null, data);
+    //         }
+    //       });
+    // }
+
+    updateNoteById = (notedata, callback) => {
+      Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
+        title: notedata.title,
+        description: notedata.description
+      }, { new : true}, (error, data) => {
         if (error) {
           logger.error(error);
           return callback(error, null);
@@ -85,24 +117,7 @@ class Model {
           return callback(null, data);
         }
       });
-    }
-
-    /**
-     * Update Note By Note ID
-     */
-    updateNoteById = (notedata, callback) => {
-          Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
-            title: notedata.title,
-            description: notedata.description
-          }, { new : true}, (error, data) => {
-            if (error) {
-              logger.error(error);
-              return callback(error, null);
-            } else {
-              return callback(null, data);
-            }
-          });
-    }
+}
 
     /**
      * Delete Note By Note Id

@@ -48,14 +48,16 @@ class Note {
             title: req.body.title,
             description: req.body.description
             };
-            noteService.createNote(note).then((data) => {
+            noteService.createNote(note)
+            .then((data) => {
                     logger.info('Successfully created note');
                     return res.status(201).send({
                         message: 'Successfully created note',
                         success: true,
                         data: data
                     });
-            }).catch(() => {
+            })
+            .catch(() => {
                     logger.error('note not created');
                     return res.status(400).json({
                         message: 'note not created',
@@ -79,13 +81,15 @@ class Note {
      */
     getAllNotes = (req, res) => {
         try { 
-        const userId = {
+        const user = {
             userId: req.userData.id
         }
-        noteService.getAllNotes(userId).then((data) => {
+        noteService.getAllNotes(user)
+        .then((data) => {
             logger.info('Notes Found Successfully');
             return res.send({success: true, message: "Notes Retrieved!", data: data})
-        }).catch(() => {
+        })
+        .catch(() => {
             return res.send({success: false, message: "Notes Not Retrieved!"})
         });
         } catch {
@@ -109,14 +113,14 @@ class Note {
                 userId: req.userData.id,
                 noteId: req.params.id
             }
-            noteService.getNoteById(ids, (error, data) => {
-                if (error) {
-                    return res.send({success: false, message: "Notes Not Retrieved!", data: error})
-                } else {
-                    logger.info('Notes Found Successfully');
-                    return res.send({success: true, message: "Notes Retrieved!", data: data})
-                }
-            });
+            noteService.getNoteById(ids)
+            .then((data) => {
+                logger.info('Notes Found Successfully');
+                return res.send({success: true, message: "Notes Retrieved!", data: data})
+            })
+            .catch((error) => {
+                return res.send({success: false, message: "Notes Not Retrieved!", data: error})
+            })
             } catch {
                 logger.error('Internal server error');
                 return res.status(500).json({

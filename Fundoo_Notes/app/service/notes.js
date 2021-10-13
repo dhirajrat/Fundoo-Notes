@@ -21,8 +21,9 @@ class Service {
 
   createNote = (note) => {
     return new Promise((resolve, reject) => {
-      noteModel.createNote(note).then((data) => resolve(data))
-        .catch(() => reject());
+      noteModel.createNote(note)
+      .then((data) => resolve(data))
+      .catch(() => reject());
     })
   }
 
@@ -43,16 +44,16 @@ class Service {
    * @param {*} ids 
    * @param {*} callback 
    */
-  getNoteById = (ids, callback) => {
-    noteModel.getNoteById(ids, (error, data) => {
-      if (error) {
-        logger.error(error);
-        return callback(error, null);
-      } else {
-        return callback(null, data);
-      }
-    }
-    );
+  getNoteById = (ids) => {
+    return new Promise((resolve, reject) => {
+      noteModel.getNoteById(ids)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error)
+      });
+    })
   }
 
   /**
