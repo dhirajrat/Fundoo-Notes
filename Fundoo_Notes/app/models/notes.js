@@ -26,22 +26,6 @@ class Model {
    * @param {*} info 
    * @param {*} callback 
    */
-    // createNote = (info, callback) => {
-    //   const note = new Notes({
-    //     userId: info.userId,
-    //     title: info.title,
-    //     description: info.description
-    //   });
-    //   note.save((error, data) => {
-    //     if (error) {
-    //       logger.error(error);
-    //       return callback(error, null);
-    //     } else {
-    //       return callback(null, data);
-    //     }
-    //   });
-    // }
-
     createNote = (info) => {
       return new Promise((resolve, reject) => {
         const note = new Notes({
