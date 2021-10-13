@@ -77,28 +77,6 @@ class Note {
      * @param {*} res 
      * @returns 
      */
-    // getAllNotes = (req, res) => {
-    //     try { 
-    //     const userId = {
-    //         userId: req.userData.id
-    //     }
-    //     noteService.getAllNotes(userId, (error, data) => {
-    //         if (error) {
-    //             return res.send({success: false, message: "Notes Not Retrieved!", data: error})
-    //         } else {
-    //             logger.info('Notes Found Successfully');
-    //             return res.send({success: true, message: "Notes Retrieved!", data: data})
-    //         }
-    //     });
-    //     } catch {
-    //         logger.error('Internal server error');
-    //         return res.status(500).json({
-    //             message: 'Internal server error',
-    //             success: false
-    //         });
-    //     }
-    // }
-
     getAllNotes = (req, res) => {
         try { 
         const userId = {

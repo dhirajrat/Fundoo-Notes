@@ -62,21 +62,6 @@ class Model {
      * @param {*} userId 
      * @param {*} callback 
      */
-    // getAllNotes = (userId, callback) => {
-    //   return new Promise((resolve, reject) => {
-        
-    //   })
-    //   console.log("46 "+userId.userId);
-    //   Notes.find({ userId: userId.userId }, (error, data) => {
-    //     if (error) {
-    //       logger.error(error);
-    //       return callback(error, null);
-    //     } else {
-    //       return callback(null, data);
-    //     }
-    //   });
-    // }
-
     getAllNotes = (userId) => {
       return new Promise((resolve, reject) => {
         console.log("46 "+userId.userId);
