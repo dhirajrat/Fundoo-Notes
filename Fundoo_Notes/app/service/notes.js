@@ -7,16 +7,23 @@ class Service {
    * @param {*} note 
    * @param {*} callback 
    */
-  createNote = (note, callback) => {
-    noteModel.createNote(note, (error, data) => {
-      if (error) {
-        logger.error(error);
-        return callback(error, null);
-      } else {
-        return callback(null, data);
-      }
-    }
-    );
+  // createNote = (note, callback) => {
+  //   noteModel.createNote(note, (error, data) => {
+  //     if (error) {
+  //       logger.error(error);
+  //       return callback(error, null);
+  //     } else {
+  //       return callback(null, data);
+  //     }
+  //   }
+  //   );
+  // }
+
+  createNote = (note) => {
+    return new Promise((resolve, reject) => {
+      noteModel.createNote(note).then((data) => resolve(data))
+        .catch(() => reject());
+    })
   }
 
   /**
@@ -24,16 +31,23 @@ class Service {
    * @param {*} userId 
    * @param {*} callback 
    */
-  getAllNotes = (userId, callback) => {
-    noteModel.getAllNotes(userId, (error, data) => {
-      if (error) {
-        logger.error(error);
-        return callback(error, null);
-      } else {
-        return callback(null, data);
-      }
-    }
-    );
+  // getAllNotes = (userId, callback) => {
+  //   noteModel.getAllNotes(userId, (error, data) => {
+  //     if (error) {
+  //       logger.error(error);
+  //       return callback(error, null);
+  //     } else {
+  //       return callback(null, data);
+  //     }
+  //   }
+  //   );
+  // }
+
+  getAllNotes = (userId) => {
+    return new Promise((resolve, reject) => {
+      noteModel.getAllNotes(userId).then((data) => resolve(data))
+      .catch(() => reject());
+    })
   }
 
   /**

@@ -8,6 +8,39 @@ class Note {
      * @param {*} res 
      * @returns 
      */
+    // createNote = (req, res) => {
+    //     try {
+    //     const note = {
+    //         userId: req.userData.id,
+    //         title: req.body.title,
+    //         description: req.body.description
+    //         };
+
+    //         noteService.createNote(note, (error, data) => {
+    //             if (error) {
+    //                 logger.error('note not created');
+    //                 return res.status(400).json({
+    //                     message: 'note not created',
+    //                     success: false
+    //                 });
+    //             } else {
+    //                 logger.info('Successfully created note');
+    //                 return res.status(201).send({
+    //                     message: 'Successfully created note',
+    //                     success: true,
+    //                     data: data
+    //                 });
+    //             }
+    //         })
+    //     } catch {
+    //     logger.error('Internal server error');
+    //         return res.status(500).json({
+    //             message: 'Internal server error',
+    //             success: false
+    //         });
+    //     }
+    // }
+
     createNote = (req, res) => {
         try {
         const note = {
@@ -15,22 +48,19 @@ class Note {
             title: req.body.title,
             description: req.body.description
             };
-
-            noteService.createNote(note, (error, data) => {
-                if (error) {
-                    logger.error('note not created');
-                    return res.status(400).json({
-                        message: 'note not created',
-                        success: false
-                    });
-                } else {
+            noteService.createNote(note).then((data) => {
                     logger.info('Successfully created note');
                     return res.status(201).send({
                         message: 'Successfully created note',
                         success: true,
                         data: data
                     });
-                }
+            }).catch(() => {
+                    logger.error('note not created');
+                    return res.status(400).json({
+                        message: 'note not created',
+                        success: false
+                    });
             })
         } catch {
         logger.error('Internal server error');
@@ -47,18 +77,38 @@ class Note {
      * @param {*} res 
      * @returns 
      */
+    // getAllNotes = (req, res) => {
+    //     try { 
+    //     const userId = {
+    //         userId: req.userData.id
+    //     }
+    //     noteService.getAllNotes(userId, (error, data) => {
+    //         if (error) {
+    //             return res.send({success: false, message: "Notes Not Retrieved!", data: error})
+    //         } else {
+    //             logger.info('Notes Found Successfully');
+    //             return res.send({success: true, message: "Notes Retrieved!", data: data})
+    //         }
+    //     });
+    //     } catch {
+    //         logger.error('Internal server error');
+    //         return res.status(500).json({
+    //             message: 'Internal server error',
+    //             success: false
+    //         });
+    //     }
+    // }
+
     getAllNotes = (req, res) => {
         try { 
         const userId = {
             userId: req.userData.id
         }
-        noteService.getAllNotes(userId, (error, data) => {
-            if (error) {
-                return res.send({success: false, message: "Notes Not Retrieved!", data: error})
-            } else {
-                logger.info('Notes Found Successfully');
-                return res.send({success: true, message: "Notes Retrieved!", data: data})
-            }
+        noteService.getAllNotes(userId).then((data) => {
+            logger.info('Notes Found Successfully');
+            return res.send({success: true, message: "Notes Retrieved!", data: data})
+        }).catch(() => {
+            return res.send({success: false, message: "Notes Not Retrieved!"})
         });
         } catch {
             logger.error('Internal server error');
@@ -147,7 +197,7 @@ class Note {
                     return res.send({success: false, message: "Note Not Deleted!", data: error})
                 } else {
                     logger.info('Notes Deleted Successfully');
-                    return res.send({success: true, message: "Notes Deleted!", data: data})
+                    return res.send({success: true, message: "Notes Deleted!"})
                 }
             });
             } catch {

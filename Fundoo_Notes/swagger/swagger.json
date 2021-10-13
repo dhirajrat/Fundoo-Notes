@@ -68,6 +68,23 @@
             "example": {
                 "Password": "Asds521@#df"
             }
+        },
+        "createnote": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Title of Note."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of Note created."
+                }
+            },
+            "example": {
+                "title": "Hello Note",
+                "description": "This is my first Note"
+            }
         }
     },
     "info": {
@@ -234,6 +251,200 @@
                     },
                     "401": {
                         "description": "Incorrect Password for reset password"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/createnote": {
+            "post": {
+                "tags": [
+                    "Create New Note"
+                ],
+                "description": "Create A new Note with Title and description !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Create Note",
+                        "in": "body",
+                        "description": "Create New Note",
+                        "schema": {
+                            "$ref": "#/definitions/createnote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Note Created succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect type Of Note"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getallnotes": {
+            "get": {
+                "tags": [
+                    "Get All Notes"
+                ],
+                "description": "Get All notes of user !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All Notes fetch succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getnotesbyid/{id}": {
+            "get": {
+                "tags": [
+                    "Get Note by ID"
+                ],
+                "description": "Get notes of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notes fetch succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/updatenotesbyid/{id}": {
+            "put": {
+                "tags": [
+                    "Update Note by ID"
+                ],
+                "description": "Update notes of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Update Note",
+                        "in": "body",
+                        "description": "Create New Note",
+                        "schema": {
+                            "$ref": "#/definitions/createnote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notes Update succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deletenote/{id}": {
+            "delete": {
+                "tags": [
+                    "Delete Note by ID"
+                ],
+                "description": "Delete notes of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notes update succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
                     },
                     "500": {
                         "description": "Internal server error"

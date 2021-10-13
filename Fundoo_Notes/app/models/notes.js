@@ -26,20 +26,35 @@ class Model {
    * @param {*} info 
    * @param {*} callback 
    */
-    createNote = (info, callback) => {
-      const note = new Notes({
-        userId: info.userId,
-        title: info.title,
-        description: info.description
-      });
-      note.save((error, data) => {
-        if (error) {
-          logger.error(error);
-          return callback(error, null);
-        } else {
-          return callback(null, data);
-        }
-      });
+    // createNote = (info, callback) => {
+    //   const note = new Notes({
+    //     userId: info.userId,
+    //     title: info.title,
+    //     description: info.description
+    //   });
+    //   note.save((error, data) => {
+    //     if (error) {
+    //       logger.error(error);
+    //       return callback(error, null);
+    //     } else {
+    //       return callback(null, data);
+    //     }
+    //   });
+    // }
+
+    createNote = (info) => {
+      return new Promise((resolve, reject) => {
+        const note = new Notes({
+          userId: info.userId,
+          title: info.title,
+          description: info.description
+        });
+        console.log("52 "+info.title+" "+info.userId);
+        note.save().then((data) => {
+          console.log("54 "+data.title);
+          resolve(data)
+        }).catch(() => reject());
+      })
     }
 
     /**
@@ -47,16 +62,28 @@ class Model {
      * @param {*} userId 
      * @param {*} callback 
      */
-    getAllNotes = (userId, callback) => {
-      console.log("46 "+userId.userId);
-      Notes.find({ userId: userId.userId }, (error, data) => {
-        if (error) {
-          logger.error(error);
-          return callback(error, null);
-        } else {
-          return callback(null, data);
-        }
-      });
+    // getAllNotes = (userId, callback) => {
+    //   return new Promise((resolve, reject) => {
+        
+    //   })
+    //   console.log("46 "+userId.userId);
+    //   Notes.find({ userId: userId.userId }, (error, data) => {
+    //     if (error) {
+    //       logger.error(error);
+    //       return callback(error, null);
+    //     } else {
+    //       return callback(null, data);
+    //     }
+    //   });
+    // }
+
+    getAllNotes = (userId) => {
+      return new Promise((resolve, reject) => {
+        console.log("46 "+userId.userId);
+        Notes.find({ userId: userId.userId }).then((data) => resolve(data))
+        .catch(() => reject());
+      })
+
     }
 
     /**
