@@ -463,6 +463,203 @@
                     }
                 }
             }
+        },
+        "/createlabel": {
+            "post": {
+                "tags": [
+                    "Create New Label"
+                ],
+                "description": "Create A new Label with Title !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Create Lable",
+                        "in": "body",
+                        "description": "Create New Lable",
+                        "schema": {
+                            "$ref": "#/definitions/createlabel"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Label Created succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect type Of Label"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getlabels": {
+            "get": {
+                "tags": [
+                    "get all Label"
+                ],
+                "description": "Get all Label with Title !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Label Retrived succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect type Of Input"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getlabel/{id}": {
+            "get": {
+                "tags": [
+                    "Get Lable by ID"
+                ],
+                "description": "Get Label of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lable Retrived succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/updatelabel/{id}": {
+            "put": {
+                "tags": [
+                    "Update Label by ID"
+                ],
+                "description": "Update label of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Update Label",
+                        "in": "body",
+                        "description": "Update Label",
+                        "schema": {
+                            "$ref": "#/definitions/createlabel"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Label Update succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deletelabel/{id}": {
+            "delete": {
+                "tags": [
+                    "Delete Label by ID"
+                ],
+                "description": "Delete label of user by ID !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Label Deleted succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     }
 }
