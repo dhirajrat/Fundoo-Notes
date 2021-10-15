@@ -34,4 +34,16 @@ module.exports = (app) => {
 
   // Create Lable API
   app.post('/createlabel', helper.verifyToken, labelController.createLabel);
+
+  // get Lable API
+  app.get('/getlabels', helper.verifyToken, labelController.getLabel);
+
+  // get Lable by id API
+  app.get('/getlabel/:id', helper.verifyToken, labelController.getLabelById);
+
+  // Update Lable API
+  app.put('/updatelabel/:id', helper.verifyToken, labelController.updateLabelById);
+
+  // Delete Lable API
+  app.delete('/deletelabel/:id', helper.verifyToken, labelController.deleteLabelById);
 };

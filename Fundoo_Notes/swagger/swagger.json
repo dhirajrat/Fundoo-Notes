@@ -85,6 +85,18 @@
                 "title": "Hello Note",
                 "description": "This is my first Note"
             }
+        },
+        "createlabel": {
+            "type": "object",
+            "properties": {
+                "labelName": {
+                    "type": "string",
+                    "description": "Title of Label."
+                }
+            },
+            "example": {
+                "labelName": "Grocerry"
+            }
         }
     },
     "info": {
