@@ -1,4 +1,5 @@
 const noteService = require('../service/notes');
+const validatorObj = require('../utility/validation.js');
 const logger = require('../../logger/logger');
 
 class Note {
@@ -15,6 +16,17 @@ class Note {
             title: req.body.title,
             description: req.body.description
             };
+
+            const valid = validatorObj.authCreateNote.validate(note);
+            if (valid.error) {
+              logger.error(valid.error);
+              return res.status(400).send({
+                success: false,
+                message: 'Invalid Input',
+                data: valid
+              });           
+            }
+
             noteService.createNote(note)
             .then((data) => {
                     logger.info('Successfully created note');
@@ -111,6 +123,17 @@ class Note {
                 userId: req.userData.id,
                 noteId: req.params.id
             }
+
+            const valid = validatorObj.authUpdateNote.validate(idanddata);
+            if (valid.error) {
+              logger.error(valid.error);
+              return res.status(400).send({
+                success: false,
+                message: 'Invalid Input',
+                data: valid
+              });           
+            }
+
             noteService.updateNoteById(idanddata, (error, data) => {
                 if (error) {
                     return res.send({success: false, message: "Notes Not Updated!", data: error})
@@ -156,6 +179,56 @@ class Note {
                     success: false
                 });
             }
+    }
+
+    addLabelToNote = (req, res) => {
+        try {
+            const labelData = {
+                labelId: [req.body.labelId],
+                noteId: req.body.noteId,
+                userId: req.userData.id
+            }
+            console.log("128 : "+req.body);
+            noteService.addLabelToNote(labelData)
+            .then((data) => {
+                logger.info('');
+                return res.send({success: true, message: "label successfully added to note"})
+            })
+            .catch((error) => {
+                return res.send({success: false, message: "error adding label", error: error})
+            })
+
+        } catch {
+            return res.status(500).json({
+                message: 'Internal server error',
+                success: false
+            });
+        }
+    }
+
+    deleteLabelFromNote = (req, res) => {
+        try {
+            const labelData = {
+                labelId: [req.body.labelId],
+                noteId: req.body.noteId,
+                userId: req.userData.id
+            }
+            console.log("128 : "+labelData.noteId);
+            noteService.deleteLabelFromNote(labelData)
+            .then((data) => {
+                logger.info('label successfully deleted from note');
+                return res.send({success: true, message: "label successfully deleted from note"})
+            })
+            .catch((error) => {
+                return res.send({success: false, message: "error deleting label from note", error: error})
+            })
+
+        } catch {
+            return res.status(500).json({
+                message: 'Internal server error',
+                success: false
+            });
+        }
     }
 
 }

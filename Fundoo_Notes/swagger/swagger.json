@@ -97,6 +97,23 @@
             "example": {
                 "labelName": "Grocerry"
             }
+        },
+        "addlabeltonote": {
+            "type": "object",
+            "properties": {
+                "labelId": {
+                    "type": "string",
+                    "description": "labelId of lable."
+                },
+                "noteId": {
+                    "type": "string",
+                    "description": "NoteId of Note."
+                }
+            },
+            "example": {
+                "labelId": "61673d80c68910cab286928c",
+                "noteId": "61673d80c68910cab286928c"
+            }
         }
     },
     "info": {

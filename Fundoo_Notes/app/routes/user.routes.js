@@ -5,45 +5,51 @@ const helper = require('../utility/helper');
 const labelController = require('../controllers/label');
 
 module.exports = (app) => {
-  // Post User Registration
+  // Post: User Registration
   app.post('/register', controller.register);
 
-  // Post Login
+  // Post: Login
   app.post('/login', controller.login);
 
-  // Post Forgot Password
+  // Post: Forgot Password
   app.post('/forgetpassword', controller.forgetPassword);
 
-  // Post Reset Password
+  // Post: Reset Password
   app.post('/resetpassword', helper.verifyTokenForReset, controller.resetPassword);
 
-  // Post Create Note
+  // Post: Create Note
   app.post('/createnote', helper.verifyToken, noteController.createNote);
 
-  // Get Notes
+  // Get: Notes
   app.get('/getallnotes', helper.verifyToken, noteController.getAllNotes);
 
-  // Get Notes by Id
+  // Get: Notes by Id
   app.get('/getnotesbyid/:id', helper.verifyToken, noteController.getNoteById);
 
-  // Update Note by Id
+  // Update: Note by Id
   app.put('/updatenotesbyid/:id', helper.verifyToken, noteController.updateNoteById);
 
-  // delete Note by Id
+  // Delete: Note by Id
   app.delete('/deletenote/:id', helper.verifyToken, noteController.deleteNoteById);
 
-  // Create Lable API
+  // Create: Lable API
   app.post('/createlabel', helper.verifyToken, labelController.createLabel);
 
-  // get Lable API
+  // get: Lable API
   app.get('/getlabels', helper.verifyToken, labelController.getLabel);
 
-  // get Lable by id API
+  // get: Lable by id API
   app.get('/getlabel/:id', helper.verifyToken, labelController.getLabelById);
 
-  // Update Lable API
+  // Update: Lable API
   app.put('/updatelabel/:id', helper.verifyToken, labelController.updateLabelById);
 
-  // Delete Lable API
+  // Delete: Lable API
   app.delete('/deletelabel/:id', helper.verifyToken, labelController.deleteLabelById);
+
+  // Update: add Labbel to Note API
+  app.put('/addlabeltonote', helper.verifyToken, noteController.addLabelToNote);
+
+  // Update: delete Labbel to Note API
+  app.put('/deletelabelfromnote', helper.verifyToken, noteController.deleteLabelFromNote);
 };

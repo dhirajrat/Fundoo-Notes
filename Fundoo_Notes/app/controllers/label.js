@@ -1,4 +1,5 @@
 const labelService = require('../service/label');
+const validatorObj = require('../utility/validation.js');
 const logger = require('../../logger/logger');
 
 class Label {
@@ -8,6 +9,16 @@ class Label {
                 labelName: req.body.labelName,
                 userId: req.userData.id,
             };
+
+            const valid = validatorObj.authLabel.validate(label);
+            if (valid.error) {
+              logger.error(valid.error);
+              return res.status(400).send({
+                success: false,
+                message: 'Invalid Input',
+                data: valid
+              });           
+            }
 
             labelService.createLabel(label).then((data) => {
                 logger.info('Label added');
@@ -84,6 +95,17 @@ class Label {
             userId: req.userData.id,
             labelId: req.params.id
         }
+
+        const valid = validatorObj.authupdateLabel.validate(upInfo);
+        if (valid.error) {
+          logger.error(valid.error);
+          return res.status(400).send({
+            success: false,
+            message: 'Invalid Input',
+            data: valid
+          });           
+        }
+
         const updatelabel = await labelService.updateLabelById(upInfo);
         console.log("86: "+updatelabel.message);
         if (updatelabel.message){

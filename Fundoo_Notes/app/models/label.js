@@ -8,9 +8,6 @@ const LabelSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId, ref: 'user',
   },
-  noteId: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
-  },
 }, {
   timestamps: true,
 });

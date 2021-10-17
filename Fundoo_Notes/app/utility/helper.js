@@ -72,11 +72,10 @@ class helper {
         try {
           const header = req.headers.authorization;
           const myArr = header.split(" ");
-          console.log("head: "+header);
           const token = myArr[1];
             const decode = jwt.verify(token, process.env.SECRET_KEY);
             if (decode) {
-              console.log("help ver token decode mail"+decode.email+" id "+decode.id);
+              console.log("token verified");
               logger.info("token verified");
               req.userData = decode;
               next();

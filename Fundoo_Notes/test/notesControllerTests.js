@@ -4,7 +4,7 @@ const chai = require('chai');
 const chaihttp = require('chai-http');
 const faker = require('faker');
 const server = require('../server');
-const test = require('./crudNoteData.json');
+const test = require('./noteData.json');
 
 chai.should();
 

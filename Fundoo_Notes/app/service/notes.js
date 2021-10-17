@@ -78,5 +78,31 @@ class Service {
     );
   }
 
+  addLabelToNote = (labeldata) => {
+    console.log("128 : "+labeldata.noteId);
+    return new Promise((resolve, reject) => {
+      noteModel.addLabelToNote(labeldata)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error)
+      });
+    })
+  }
+
+  deleteLabelFromNote = (labeldata) => {
+    console.log("128 : "+labeldata.noteId);
+    return new Promise((resolve, reject) => {
+      noteModel.deleteLabelFromNote(labeldata)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error)
+      });
+    })
+  }
+
 }
 module.exports = new Service();

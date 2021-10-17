@@ -13,6 +13,11 @@ const noteSchema = mongoose.Schema({
     required: true,
     minlength: 2,
   },
+  labels: {
+    type: [{ type: mongoose.Schema.Types.ObjectId,
+      ref: 'label'
+    }]
+  },
 },
 {
   timestamps: true,
@@ -101,7 +106,7 @@ class Model {
           return callback(null, data);
         }
       });
-}
+    }
 
     /**
      * Delete Note By Note Id
@@ -116,6 +121,36 @@ class Model {
               return callback(null, data);
             }
           });
+    }
+
+    addLabelToNote = (labeldata) => {
+      console.log("128 : "+labeldata.noteId," ",labeldata.labelId);
+      return new Promise((resolve, reject) => {
+        Notes.findOneAndUpdate({_id:labeldata.noteId, userId:labeldata.userId}, {$push : { "labels": {$each: labeldata.labelId}} }, {new: true})
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      })
+    }
+    
+    deleteLabelFromNote = (labeldata) => {
+      console.log("128 : "+labeldata.noteId," ",labeldata.labelId);
+      return new Promise((resolve, reject) => {
+        Notes.findOneAndUpdate(
+          {_id:labeldata.noteId, userId:labeldata.userId},
+          { $pull: { labels: labeldata.labelId[0] } },
+          { new: true }
+        )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      })
     }
 
 }
