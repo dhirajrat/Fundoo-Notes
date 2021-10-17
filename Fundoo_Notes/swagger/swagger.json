@@ -677,6 +677,86 @@
                     }
                 }
             }
+        },
+        "/addlabeltonote": {
+            "put": {
+                "tags": [
+                    "add Label to Note API"
+                ],
+                "description": "add Label to Note API !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "add Label to note",
+                        "in": "body",
+                        "description": "add label to Note",
+                        "schema": {
+                            "$ref": "#/definitions/addlabeltonote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "add Label to note succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect type Of Input"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/deletelabelfromnote": {
+            "put": {
+                "tags": [
+                    "delete Label from Note API"
+                ],
+                "description": "delete Label from Note API !!",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "token for validation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "delete Label to note",
+                        "in": "body",
+                        "description": "delete label to Note",
+                        "schema": {
+                            "$ref": "#/definitions/addlabeltonote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete Label from note succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect type Of Input"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     }
 }
