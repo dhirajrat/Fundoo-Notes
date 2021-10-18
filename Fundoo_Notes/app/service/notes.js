@@ -1,5 +1,7 @@
 const noteModel = require('../models/notes');
 const logger = require('../../logger/logger');
+const redisClass = require('../utility/redis')
+const redis = require('redis');
 
 class Service {
   /**
@@ -10,7 +12,10 @@ class Service {
   createNote = (note) => {
     return new Promise((resolve, reject) => {
       noteModel.createNote(note)
-      .then((data) => resolve(data))
+      .then((data) => {
+        redisClass.clearCache();
+        resolve(data)
+      })
       .catch(() => reject());
     })
   }
@@ -22,7 +27,12 @@ class Service {
    */
   getAllNotes = (userId) => {
     return new Promise((resolve, reject) => {
-      noteModel.getAllNotes(userId).then((data) => resolve(data))
+      noteModel.getAllNotes(userId).then((data) => { 
+        const rdata = JSON.stringify(data);
+        console.log("31 rdata: ");
+        redisClass.setDataInCache("notes", 3600, rdata);
+        resolve(data)
+      })
       .catch(() => reject());
     })
   }
@@ -36,6 +46,8 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.getNoteById(ids)
       .then((data) => {
+        const rdata = JSON.stringify(data);
+        redisClass.setDataInCache("note", 3600, rdata);
         resolve(data);
       })
       .catch((error) => {
@@ -55,6 +67,7 @@ class Service {
         logger.error(error);
         return callback(error, null);
       } else {
+        redisClass.clearCache();
         return callback(null, data);
       }
     }
@@ -72,6 +85,7 @@ class Service {
         logger.error(error);
         return callback(error, null);
       } else {
+        redisClass.clearCache();
         return callback(null, data);
       }
     }
@@ -83,6 +97,7 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.addLabelToNote(labeldata)
       .then((data) => {
+        redisClass.clearCache();
         resolve(data);
       })
       .catch((error) => {
@@ -96,6 +111,7 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.deleteLabelFromNote(labeldata)
       .then((data) => {
+        redisClass.clearCache();
         resolve(data);
       })
       .catch((error) => {

@@ -3,6 +3,7 @@ const controller = require('../controllers/user.controller');
 const noteController = require('../controllers/notes');
 const helper = require('../utility/helper');
 const labelController = require('../controllers/label');
+const redis = require('../utility/redis');
 
 module.exports = (app) => {
   // Post: User Registration
@@ -21,10 +22,10 @@ module.exports = (app) => {
   app.post('/createnote', helper.verifyToken, noteController.createNote);
 
   // Get: Notes
-  app.get('/getallnotes', helper.verifyToken, noteController.getAllNotes);
+  app.get('/getallnotes', helper.verifyToken, redis.checkCacheNotes, noteController.getAllNotes);
 
   // Get: Notes by Id
-  app.get('/getnotesbyid/:id', helper.verifyToken, noteController.getNoteById);
+  app.get('/getnotesbyid/:id', helper.verifyToken, redis.checkCacheNote, noteController.getNoteById);
 
   // Update: Note by Id
   app.put('/updatenotesbyid/:id', helper.verifyToken, noteController.updateNoteById);
@@ -36,10 +37,10 @@ module.exports = (app) => {
   app.post('/createlabel', helper.verifyToken, labelController.createLabel);
 
   // get: Lable API
-  app.get('/getlabels', helper.verifyToken, labelController.getLabel);
+  app.get('/getlabels', helper.verifyToken, redis.checkCacheLabels, labelController.getLabel);
 
   // get: Lable by id API
-  app.get('/getlabel/:id', helper.verifyToken, labelController.getLabelById);
+  app.get('/getlabel/:id', helper.verifyToken, redis.checkCacheLabel, labelController.getLabelById);
 
   // Update: Lable API
   app.put('/updatelabel/:id', helper.verifyToken, labelController.updateLabelById);
