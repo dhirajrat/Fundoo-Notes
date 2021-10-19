@@ -1,6 +1,5 @@
 const labelModel = require('../models/label');
 const redisClass = require('../utility/redis')
-const redis = require('redis');
 
 class Service {
 
@@ -8,7 +7,8 @@ class Service {
         return new Promise((resolve, reject) => {
         labelModel.createLabel(label)
         .then((data) => {
-            redisClass.clearCache();
+            const rdata = JSON.stringify(data);
+            redisClass.setDataInCache("label", 3600, rdata);
             resolve(data)
         })
         .catch((error) => reject(error));
@@ -19,7 +19,6 @@ class Service {
         return new Promise((resolve, reject) => {
             labelModel.getLabel(id).then((data) => {
                 const rdata = JSON.stringify(data);
-                console.log("31 rdata: ");
                 redisClass.setDataInCache("labels", 3600, rdata);
                 resolve(data);
             })
@@ -32,7 +31,6 @@ class Service {
             labelModel.getLabelById(ids)
             .then((data) => {
                 const rdata = JSON.stringify(data);
-                console.log("31 rdata: ");
                 redisClass.setDataInCache("label", 3600, rdata);
                 resolve(data)
             })
@@ -43,13 +41,25 @@ class Service {
     }
 
     async updateLabelById(data){
-        redisClass.clearCache();
-        return await labelModel.updateLabelById(data)
+        // const rdata = JSON.stringify(data);
+        // redisClass.setDataInCache("label", 3600, rdata);
+        // return await labelModel.updateLabelById(data)
+
+
+        const result = await labelModel.updateLabelById(data)
+        if(result){
+            const rdata = JSON.stringify(result);
+            redisClass.setDataInCache("label", 3600, rdata);
+        }
+        return result;
     }
 
     async deleteLabelById(data){
-        redisClass.clearCache();
-        return await labelModel.deleteLabelById(data)
+        const result = await labelModel.deleteLabelById(data)
+        if(result){
+            redisClass.clearCache();
+        }
+        return result;
 }
 }
 module.exports = new Service();

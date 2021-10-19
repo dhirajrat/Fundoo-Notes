@@ -1,7 +1,6 @@
 const noteModel = require('../models/notes');
 const logger = require('../../logger/logger');
 const redisClass = require('../utility/redis')
-const redis = require('redis');
 
 class Service {
   /**
@@ -13,7 +12,8 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.createNote(note)
       .then((data) => {
-        redisClass.clearCache();
+        const rdata = JSON.stringify(data);
+        redisClass.setDataInCache("noteid", 3600, rdata);
         resolve(data)
       })
       .catch(() => reject());
@@ -29,7 +29,6 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.getAllNotes(userId).then((data) => { 
         const rdata = JSON.stringify(data);
-        console.log("31 rdata: ");
         redisClass.setDataInCache("notes", 3600, rdata);
         resolve(data)
       })
@@ -47,7 +46,7 @@ class Service {
       noteModel.getNoteById(ids)
       .then((data) => {
         const rdata = JSON.stringify(data);
-        redisClass.setDataInCache("note", 3600, rdata);
+        redisClass.setDataInCache("noteid", 3600, rdata);
         resolve(data);
       })
       .catch((error) => {
@@ -67,7 +66,8 @@ class Service {
         logger.error(error);
         return callback(error, null);
       } else {
-        redisClass.clearCache();
+        const rdata = JSON.stringify(data);
+        redisClass.setDataInCache("noteid", 3600, rdata);
         return callback(null, data);
       }
     }
@@ -93,11 +93,11 @@ class Service {
   }
 
   addLabelToNote = (labeldata) => {
-    console.log("128 : "+labeldata.noteId);
     return new Promise((resolve, reject) => {
       noteModel.addLabelToNote(labeldata)
       .then((data) => {
-        redisClass.clearCache();
+        const rdata = JSON.stringify(data);
+        redisClass.setDataInCache("noteid", 3600, rdata);
         resolve(data);
       })
       .catch((error) => {
@@ -107,11 +107,11 @@ class Service {
   }
 
   deleteLabelFromNote = (labeldata) => {
-    console.log("128 : "+labeldata.noteId);
     return new Promise((resolve, reject) => {
       noteModel.deleteLabelFromNote(labeldata)
       .then((data) => {
-        redisClass.clearCache();
+        const rdata = JSON.stringify(data);
+        redisClass.setDataInCache("noteid", 3600, rdata);
         resolve(data);
       })
       .catch((error) => {

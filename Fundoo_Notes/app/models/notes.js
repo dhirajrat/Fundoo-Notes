@@ -67,7 +67,7 @@ class Model {
      */
     getNoteById = (ids) => {
       return new Promise((resolve, reject) => {
-        Notes.find({_id:ids.noteId, userId: ids.userId})
+        Notes.findOne({_id:ids.noteId, userId: ids.userId})
         .then((data) => {
           resolve(data);
         })

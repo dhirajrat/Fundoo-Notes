@@ -49,3 +49,77 @@ describe('create label api for positive and negative test case', () => {
       });
   });
 });
+
+describe('get label api for positive and negative test case', () => {
+  it('GivenLabelDetails_When_Label_Get_Successfully', (done) => {
+    const token = test.validtoken;
+    chai
+      .request(server)
+      .get('/getlabels')
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(200);
+        done();
+      });
+  });
+
+  it('GivenLabelDetails_When_Label_Get_Successfully 401', (done) => {
+    const token = test.invalidtoken;
+    chai
+      .request(server)
+      .get('/getlabels')
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
+describe('update label api for positive and negative test case', () => {
+  it('GivenLabelDetails_When_Label_Update_Successfully 201', (done) => {
+    const token = test.validtoken;
+    const createLabel = {
+      labelName: faker.lorem.word(),
+    };
+    const id = test.validid;
+    chai
+      .request(server)
+      .put(`/updatelabel/${id}`)
+      .set({ authorization: token })
+      .send(createLabel)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(200);
+        done();
+      });
+  });
+
+  it('GivenLabelDetails_When_Label_Update_UnSuccessfully 500', (done) => {
+    const token = test.validtoken;
+    const createLabel = {
+      labelName: faker.lorem.word(),
+    };
+    const id = test.invalidid;
+    chai
+      .request(server)
+      .put(`/updatelabel/${id}`)
+      .set({ authorization: token })
+      .send(createLabel)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(500);
+        done();
+      });
+  });
+});

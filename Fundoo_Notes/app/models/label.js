@@ -39,7 +39,7 @@ class Model {
 
     getLabelById = (ids) =>{
         return new Promise((resolve, reject) => {
-          Label.find({ _id:ids.labelId, userId: ids.userId })
+          Label.findOne({ _id:ids.labelId, userId: ids.userId })
           .then((data) => {
             resolve(data);
           })

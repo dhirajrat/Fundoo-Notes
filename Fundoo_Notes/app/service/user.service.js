@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../models/user.model.js");
 const helper = require("../utility/helper.js");
 const logger = require('../../logger/logger');
-const sendLinkMail = require('../utility/sendresetlink');
+const sendLinkMail = require('../utility/nodemailer');
 class userService {
   /**
    * Register User
