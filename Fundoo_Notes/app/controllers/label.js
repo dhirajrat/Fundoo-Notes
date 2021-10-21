@@ -10,7 +10,7 @@ class Label {
                 userId: req.userData.id,
             };
 
-            const valid = validatorObj.authLabel.validate(label);
+            const valid = validatorObj.authLabel.validate(req.body);
             if (valid.error) {
               logger.error(valid.error);
               return res.status(400).send({
@@ -96,7 +96,7 @@ class Label {
             labelId: req.params.id
         }
 
-        const valid = validatorObj.authupdateLabel.validate(upInfo);
+        const valid = validatorObj.authLabel.validate(req.body);
         if (valid.error) {
           logger.error(valid.error);
           return res.status(400).send({

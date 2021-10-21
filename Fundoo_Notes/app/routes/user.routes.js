@@ -22,7 +22,7 @@ module.exports = (app) => {
   app.post('/createnote', helper.verifyToken, noteController.createNote);
 
   // Get: Notes
-  app.get('/getallnotes', helper.verifyToken, redis.checkCacheNotes, noteController.getAllNotes);
+  app.get('/getallnotes', helper.verifyToken, noteController.getAllNotes);
 
   // Get: Notes by Id
   app.get('/getnotesbyid/:id', helper.verifyToken, redis.checkCacheNote, noteController.getNoteById);
@@ -37,7 +37,7 @@ module.exports = (app) => {
   app.post('/createlabel', helper.verifyToken, labelController.createLabel);
 
   // get: Lable API
-  app.get('/getlabels', helper.verifyToken, redis.checkCacheLabels, labelController.getLabel);
+  app.get('/getlabels', helper.verifyToken, labelController.getLabel);
 
   // get: Lable by id API
   app.get('/getlabel/:id', helper.verifyToken, redis.checkCacheLabel, labelController.getLabelById);

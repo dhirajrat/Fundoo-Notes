@@ -17,7 +17,7 @@ class Note {
             description: req.body.description
             };
 
-            const valid = validatorObj.authCreateNote.validate(note);
+            const valid = validatorObj.authNote.validate(req.body);
             if (valid.error) {
               logger.error(valid.error);
               return res.status(400).send({
@@ -124,7 +124,7 @@ class Note {
                 noteId: req.params.id
             }
 
-            const valid = validatorObj.authUpdateNote.validate(idanddata);
+            const valid = validatorObj.authNote.validate(req.body);
             if (valid.error) {
               logger.error(valid.error);
               return res.status(400).send({

@@ -123,3 +123,37 @@ describe('update label api for positive and negative test case', () => {
       });
   });
 });
+
+describe('Delete label api for positive and negative test case', () => {
+  it('GivenLabelDetails_When_Label_delete_Successfully 200', (done) => {
+    const token = test.validtoken;
+    const id = test.validdelid;
+    chai
+      .request(server)
+      .put(`/deletelabel/${id}`)
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(404);
+        done();
+      });
+  });
+
+  it('GivenLabelDetails_When_Label_delete_Not_Successfully 404', (done) => {
+    const token = test.validtoken;
+    const id = test.invalidid;
+    chai
+      .request(server)
+      .put(`/deletelabel/${id}`)
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(404);
+        done();
+      });
+  });
+});

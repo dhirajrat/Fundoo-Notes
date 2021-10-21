@@ -15,6 +15,11 @@ const LabelSchema = new mongoose.Schema({
 const Label = mongoose.model('label', LabelSchema);
 
 class Model {
+  /**
+   * Create Label
+   * @param {*} data 
+   * @returns 
+   */
     createLabel = (data) => {
         return new Promise((resolve, reject) => {
             const label = new Label({
@@ -27,6 +32,11 @@ class Model {
           });
     }
 
+    /**
+     * Get Label
+     * @param {*} id 
+     * @returns 
+     */
     getLabel = (id) => {
         return new Promise((resolve, reject) => {
           Label.find({ userId: id })
@@ -37,20 +47,37 @@ class Model {
         });
       }
 
+      /**
+       * Get Label By ID
+       * @param {*} ids 
+       * @returns 
+       */
     getLabelById = (ids) =>{
         return new Promise((resolve, reject) => {
-          Label.findOne({ _id:ids.labelId, userId: ids.userId })
-          .then((data) => {
-            resolve(data);
+          Label.findOne( { _id: ids.labelId } , (error, data) => {
+            if (data) {
+              resolve(data);
+            } else {
+              reject(error);
+            }
           })
-          .catch(() => reject("note Note Found"));
         })
     }
 
+    /**
+     * Update Label
+     * @param {*} data 
+     * @returns 
+     */
     async updateLabelById (data){
         return await Label.findOneAndUpdate({ _id:data.labelId, userId: data.userId }, {labelName: data.labelName}, {new: true})
     }
 
+    /**
+     * Delete Label
+     * @param {*} data 
+     * @returns 
+     */
     async deleteLabelById (data){
       return await Label.findOneAndDelete({ _id:data.labelId, userId: data.userId })
     }

@@ -37,30 +37,10 @@ class ValidatorSchema {
     labelName: Joi.string()
                   .min(1)
                   .max(25)
-                  .required(),
-
-    userId: Joi.string()
-              .required()
+                  .required()
   });
 
-  authupdateLabel = Joi.object({
-    labelName: Joi.string()
-                  .min(1)
-                  .max(25)
-                  .required(),
-
-    userId: Joi.string()
-              .required(),
-
-    labelId: Joi.string()
-              .required()
-              .pattern(new RegExp("^[a-zA-z0-9]{24}$"))
-  });
-
-  authCreateNote = Joi.object({
-    userId: Joi.string()
-              .required(),
-
+  authNote = Joi.object({
     title: Joi.string()
               .min(0)
               .max(200)
@@ -72,23 +52,6 @@ class ValidatorSchema {
               .required(),
   });
 
-  authUpdateNote = Joi.object({
-    userId: Joi.string()
-              .required(),
-
-    noteId: Joi.string()
-              .required(),
-
-    title: Joi.string()
-              .min(0)
-              .max(200)
-              .required(),
-
-    description: Joi.string()
-              .min(1)
-              .max(3000)
-              .required(),
-  });
 }
 
 module.exports = new ValidatorSchema();
