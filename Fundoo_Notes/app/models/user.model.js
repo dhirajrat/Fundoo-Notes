@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       minlength: 5
+    },
+    verified: {
+      type: Boolean,
+      default: false
     }
   },
   {
@@ -70,6 +74,21 @@ class userModel {
     }
   };
 
+  confirmRegister = (data, callback) => {
+    console.log("con mod 78: ",data.firstName);
+    user.findOneAndUpdate({ email: data.email },{
+      verified: true
+      }, (error, data) => {
+      if (error) {
+        logger.error('data not found in database');
+        return callback(error, null);
+      } else {
+        logger.info('data found in database');
+        return callback(null, data);
+      }
+    });
+  }
+
   /**
    * Login Function
    * @param {*} loginData 
@@ -82,8 +101,16 @@ class userModel {
         logger.error('data not found in database');
         return callback(error, null);
       } else {
-        logger.info('data found in database');
-        return callback(null, data);
+        console.log("104: verified: ", data.verified);
+
+        if(data.verified == true){
+          logger.info('data found in database');
+          return callback(null, data);
+        } else {
+          logger.info('data found in database but not verified');
+          return callback('not verified mail', null);
+        }
+
       }
     });
   };

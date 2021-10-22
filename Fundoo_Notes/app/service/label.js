@@ -39,7 +39,7 @@ class Service {
     async updateLabelById(data){
         const result = await labelModel.updateLabelById(data)
         if(result){
-            redisClass.clearCache();
+            redisClass.clearCache("label");
         }
         return result;
     }
@@ -47,7 +47,7 @@ class Service {
     async deleteLabelById(data){
         const result = await labelModel.deleteLabelById(data)
         if(result){
-            redisClass.clearCache();
+            redisClass.clearCache("label");
         }
         return result;
     }

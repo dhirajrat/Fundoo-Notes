@@ -42,7 +42,7 @@ class Redis {
     }
 
     clearCache() {
-        client.flushall();
+        client.del(key);
         console.log('Cache is cleared!')
     }
 

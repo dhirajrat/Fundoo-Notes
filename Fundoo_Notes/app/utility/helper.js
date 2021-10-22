@@ -34,11 +34,19 @@ class helper {
         });
     }
 
+    jwtTokenGenerateforConfirm = (payload, secretkey, callback) => {
+      jwt.sign({email: payload.email}, secretkey, {expiresIn: '500h'}, (err, token) =>{
+          if(err){ return callback("token not generated", null);}
+          else {return callback (null, token);}
+      });
+    }
+
     /**
      * Send Welcome Mail to user
      * @param {*} data 
      */
     sendWelcomeMail = (data) => {
+      try {
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -60,6 +68,7 @@ class helper {
 
       // Preview only available when sending through an Ethereal account
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    } catch {}
     }
 
     /**
