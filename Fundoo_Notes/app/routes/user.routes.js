@@ -9,7 +9,7 @@ module.exports = (app) => {
   // Post: User Registration
   app.post('/register', controller.register);
 
-  // Post: Confirm Register
+  // Get: Confirm Register
   app.get('/confirmregister/:token', controller.confirmRegister);
 
   // Post: Login

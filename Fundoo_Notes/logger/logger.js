@@ -3,6 +3,9 @@ const { createLogger, transports, format } = require('winston');
 
 const customFormat = format.combine(format.timestamp(), format.printf((info) => `[${info.timestamp}] - [${info.level}] - ${info.message}`));
 
+/**
+ * Create Logger
+ */
 const logger = createLogger({
   format: customFormat,
   transports: [

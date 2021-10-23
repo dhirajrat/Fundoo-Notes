@@ -3,6 +3,11 @@ const redisClass = require('../utility/redis')
 
 class Service {
 
+    /**
+     * Create Label
+     * @param {*} label 
+     * @returns 
+     */
     createLabel = (label) => {
         return new Promise((resolve, reject) => {
         labelModel.createLabel(label)
@@ -13,6 +18,11 @@ class Service {
         })
     }
 
+    /**
+     * Get All Label
+     * @param {*} id 
+     * @returns 
+     */
     getLabel =(id) => {
         return new Promise((resolve, reject) => {
             labelModel.getLabel(id).then((data) => {
@@ -22,6 +32,11 @@ class Service {
         })
     }
 
+    /**
+     * Get Label by ID
+     * @param {*} ids 
+     * @returns 
+     */
     getLabelById = (ids) => {
         return new Promise((resolve, reject) => {
             labelModel.getLabelById(ids)
@@ -36,6 +51,11 @@ class Service {
         })
     }
 
+    /**
+     * Update Label by ID
+     * @param {*} data 
+     * @returns 
+     */
     async updateLabelById(data){
         const result = await labelModel.updateLabelById(data)
         if(result){
@@ -44,6 +64,11 @@ class Service {
         return result;
     }
 
+    /**
+     * Delete Label
+     * @param {*} data 
+     * @returns 
+     */
     async deleteLabelById(data){
         const result = await labelModel.deleteLabelById(data)
         if(result){

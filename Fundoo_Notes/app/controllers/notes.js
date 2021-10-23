@@ -181,6 +181,12 @@ class Note {
             }
     }
 
+    /**
+     * Add Label to Note
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     addLabelToNote = (req, res) => {
         try {
             const labelData = {
@@ -206,6 +212,12 @@ class Note {
         }
     }
 
+    /**
+     * Delete Label From Note
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     deleteLabelFromNote = (req, res) => {
         try {
             const labelData = {

@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 // Input Validation Schema
 class ValidatorSchema {
+  //Register Data Auth Validation
   authRegister = Joi.object({
     firstName: Joi.string()
                 .min(2)
@@ -22,7 +23,7 @@ class ValidatorSchema {
                 .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
   });
 
-  // Email and Password json Object Validation
+  // Email and Password json Object Validation For Login
   authLogin = Joi.object({
     email: Joi.string()
                 .required()
@@ -33,6 +34,7 @@ class ValidatorSchema {
                 .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
   });
 
+  // Label Data Validate
   authLabel = Joi.object({
     labelName: Joi.string()
                   .min(1)
@@ -40,6 +42,7 @@ class ValidatorSchema {
                   .required()
   });
 
+  // Note Validation
   authNote = Joi.object({
     title: Joi.string()
               .min(0)

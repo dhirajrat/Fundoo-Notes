@@ -1,6 +1,11 @@
 const nodemailer = require("nodemailer");
 
 class SendResetPassMail {
+  /**
+   * Send Mail to Reset Password
+   * @param {*} token 
+   * @param {*} data 
+   */
     sendResetPasswordMail = (token, data) => {
       const link = `http://localhost:${process.env.PORT}/resetpassword/${token}`;
       // create reusable transporter object using the default SMTP transport
@@ -28,6 +33,11 @@ class SendResetPassMail {
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }
 
+    /**
+     * Send Mail to Confirm Mail ID
+     * @param {*} token 
+     * @param {*} data 
+     */
     sendConfirmMail = (token, data) => {
       const link = `http://localhost:${process.env.PORT}/confirmregister/${token}`;
       // create reusable transporter object using the default SMTP transport

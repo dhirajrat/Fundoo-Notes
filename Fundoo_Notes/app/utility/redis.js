@@ -3,6 +3,12 @@ const client = redis.createClient(process.env.REDIS_PORT);
 
 class Redis {
 
+    /**
+     * check Cache For Notes
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     checkCacheNote = (req, res, next) => {
         client.get(req.params.id, (error, data) => {
             if(error) {
@@ -21,6 +27,12 @@ class Redis {
         });
     }
 
+    /**
+     * Check Cache For Label
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     checkCacheLabel = (req, res, next) => {
         client.get(req.params.id, (error, data) => {
             console.log("l 53");
@@ -41,11 +53,21 @@ class Redis {
         });
     }
 
+    /**
+     * Clear Cache for given Key
+     * @param {*} key 
+     */
     clearCache(key) {
         client.del(key);
         console.log('Cache is cleared!')
     }
 
+    /**
+     * Set Data
+     * @param {*} key 
+     * @param {*} time 
+     * @param {*} value 
+     */
     setDataInCache(key, time, value) {
         client.SETEX(key, time, value);
    }

@@ -3,6 +3,12 @@ const validatorObj = require('../utility/validation.js');
 const logger = require('../../logger/logger');
 
 class Label {
+  /**
+   * Create Label
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
     createLabel = (req, res) => {
         try {
             const label = {
@@ -44,6 +50,11 @@ class Label {
         }
     }
 
+    /**
+     * Get Label
+     * @param {*} req 
+     * @param {*} res 
+     */
     getLabel = (req, res) => {
         const userId = req.userData.id;
         labelService.getLabel(userId)
@@ -64,6 +75,11 @@ class Label {
         })
       }
 
+      /**
+       * Get Label by ID
+       * @param {*} req 
+       * @param {*} res 
+       */
       getLabelById = (req, res) => {
           const ids = {
             userId: req.userData.id,
@@ -87,6 +103,12 @@ class Label {
           })
       }
 
+      /**
+       * Update Label By ID
+       * @param {*} req 
+       * @param {*} res 
+       * @returns 
+       */
       updateLabelById = async (req, res) => {
         try {
         console.log("hello");
@@ -129,15 +151,19 @@ class Label {
         }
     }
 
+    /**
+     * Delete Label
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     deleteLabelById = async (req, res) => {
         try {
-        console.log("hello");
         const upInfo = {
             userId: req.userData.id,
             labelId: req.params.id
         }
         const deletelabel = await labelService.deleteLabelById(upInfo);
-        console.log("86: "+deletelabel.message);
         if (deletelabel.message){
             logger.error('Labels Not deleted');
             return res.status(404).send({

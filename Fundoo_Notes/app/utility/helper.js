@@ -34,6 +34,12 @@ class helper {
         });
     }
 
+    /**
+     * Token Generate For Confirm Mail
+     * @param {*} payload 
+     * @param {*} secretkey 
+     * @param {*} callback 
+     */
     jwtTokenGenerateforConfirm = (payload, secretkey, callback) => {
       jwt.sign({email: payload.email}, secretkey, {expiresIn: '500h'}, (err, token) =>{
           if(err){ return callback("token not generated", null);}

@@ -78,22 +78,10 @@ class Model {
     }
 
     /**
-     * Update Note By Note ID
+     * Update Note
+     * @param {*} notedata 
+     * @param {*} callback 
      */
-    // updateNoteById = (notedata, callback) => {
-    //       Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
-    //         title: notedata.title,
-    //         description: notedata.description
-    //       }, { new : true}, (error, data) => {
-    //         if (error) {
-    //           logger.error(error);
-    //           return callback(error, null);
-    //         } else {
-    //           return callback(null, data);
-    //         }
-    //       });
-    // }
-
     updateNoteById = (notedata, callback) => {
       Notes.findOneAndUpdate({_id: notedata.noteId, userId: notedata.userId}, {
         title: notedata.title,
@@ -123,6 +111,11 @@ class Model {
           });
     }
 
+    /**
+     * Add Label To Note
+     * @param {*} labeldata 
+     * @returns 
+     */
     addLabelToNote = (labeldata) => {
       console.log("128 : "+labeldata.noteId," ",labeldata.labelId);
       return new Promise((resolve, reject) => {
@@ -136,6 +129,11 @@ class Model {
       })
     }
     
+    /**
+     * Delete Label from Note
+     * @param {*} labeldata 
+     * @returns 
+     */
     deleteLabelFromNote = (labeldata) => {
       console.log("128 : "+labeldata.noteId," ",labeldata.labelId);
       return new Promise((resolve, reject) => {

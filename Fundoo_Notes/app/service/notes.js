@@ -87,6 +87,11 @@ class Service {
     );
   }
 
+  /**
+   * Add Label to Note
+   * @param {*} labeldata 
+   * @returns 
+   */
   addLabelToNote = (labeldata) => {
     return new Promise((resolve, reject) => {
       noteModel.addLabelToNote(labeldata)
@@ -100,6 +105,11 @@ class Service {
     })
   }
 
+  /**
+   * Delete Label from Note
+   * @param {*} labeldata 
+   * @returns 
+   */
   deleteLabelFromNote = (labeldata) => {
     return new Promise((resolve, reject) => {
       noteModel.deleteLabelFromNote(labeldata)
