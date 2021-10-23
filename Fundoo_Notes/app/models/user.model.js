@@ -74,8 +74,10 @@ class userModel {
     }
   };
 
+  /**
+   * Confirm Register
+   */
   confirmRegister = (data, callback) => {
-    console.log("con mod 78: ",data.firstName);
     user.findOneAndUpdate({ email: data.email },{
       verified: true
       }, (error, data) => {
@@ -101,8 +103,6 @@ class userModel {
         logger.error('data not found in database');
         return callback(error, null);
       } else {
-        console.log("104: verified: ", data.verified);
-
         if(data.verified == true){
           logger.info('data found in database');
           return callback(null, data);
@@ -110,7 +110,6 @@ class userModel {
           logger.info('data found in database but not verified');
           return callback('not verified mail', null);
         }
-
       }
     });
   };

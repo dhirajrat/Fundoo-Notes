@@ -41,15 +41,15 @@ class userService {
     });
   };
 
+  /**
+   * Confirm Register
+   * @param {*} data 
+   * @param {*} callback 
+   */
   confirmRegister = (data, callback) => {
-    console.log("con 44: ",data.token)
     const decode = jwt.verify(data.token, process.env.SECRET_KEY_FOR_CONFIRM);
     if(decode){
-      console.log("con :: 47: ",decode.email);
-
       rabit.receiver(decode.email).then((val)=>{
-
-        console.log("rabit serv: ",val);
         userModel.confirmRegister(JSON.parse(val), (error, data) => {
           if (data) {
             return callback(null, data);
@@ -58,11 +58,6 @@ class userService {
           }
         })
         }).catch(()=>{console.log('failed');})
-
-      // rabit.receiver(decode.email).then((rdata)=>{
-
- 
-      // }).catch(()=>{console.log("error");})
     }
   }
 

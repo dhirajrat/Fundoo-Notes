@@ -57,14 +57,18 @@ class Controller {
         }
   };
 
+  /**
+   * Confirm Mail in Resister
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
   confirmRegister = (req, res) => {
     try {
       const data = {
         token: req.params.token
       };
-      console.log("con 65: ",req.params.token)
     userService.confirmRegister(data, (error, data) => {
-      console.log("con 67: ")
       if (error) {
           return res.json({
           success: false,

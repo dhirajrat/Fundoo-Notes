@@ -1,6 +1,11 @@
 const amqp = require('amqplib/callback_api');
 
 class RabitMq {
+    /**
+     * Sender
+     * @param {*} data 
+     * @param {*} queue 
+     */
     sender = (data,queue) => {
         amqp.connect('amqp://localhost', (error, connection) => {
             if (error) {
@@ -20,6 +25,11 @@ class RabitMq {
         })
     }
 
+    /**
+     * Reciever
+     * @param {*} queue 
+     * @returns 
+     */
     receiver = (queue) => {
         return new Promise((resolve, reject)=>{
             amqp.connect('amqp://localhost', (error, connection) => {
@@ -44,25 +54,5 @@ class RabitMq {
         })
     }
 }
-
-
-// const rab = new RabitMq();
-
-// const dt = {
-//     fName: "miraj",
-//     lName: "Rathod",
-//     email: "jam@mail.com"
-// }
-
-// rab.sender(dt,dt.email);
-// async function getres(){
-// const res = await rab.receiver(dt.email);
-// console.log(res);
-// }
-
-// getres();
-
-// rab.receiver('mandeep.test1996@gmail.com').then((val)=>{console.log("ttt: ",val);}).catch(()=>{console.log('failed');})
-
 
 module.exports = new RabitMq();

@@ -757,6 +757,37 @@
                     }
                 }
             }
+        },
+        "/confirmregister/{token}": {
+            "post": {
+                "tags": [
+                    "Confirm Mail Id"
+                ],
+                "description": "Confirm Mail ID !!",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Mail confirmed succesfully !!"
+                    },
+                    "401": {
+                        "description": "Incorrect Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     }
 }
