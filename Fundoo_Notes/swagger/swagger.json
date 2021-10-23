@@ -759,7 +759,7 @@
             }
         },
         "/confirmregister/{token}": {
-            "post": {
+            "get": {
                 "tags": [
                     "Confirm Mail Id"
                 ],

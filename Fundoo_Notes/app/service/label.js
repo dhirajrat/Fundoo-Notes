@@ -27,7 +27,7 @@ class Service {
             labelModel.getLabelById(ids)
             .then((data) => {
                 const rdata = JSON.stringify(data);
-                redisClass.setDataInCache("label", 3600, rdata);
+                redisClass.setDataInCache(data.id, 3600, rdata);
                 resolve(data)
             })
             .catch((message) => {
@@ -39,7 +39,7 @@ class Service {
     async updateLabelById(data){
         const result = await labelModel.updateLabelById(data)
         if(result){
-            redisClass.clearCache("label");
+            redisClass.clearCache(result.id);
         }
         return result;
     }
@@ -47,7 +47,7 @@ class Service {
     async deleteLabelById(data){
         const result = await labelModel.deleteLabelById(data)
         if(result){
-            redisClass.clearCache("label");
+            redisClass.clearCache(result.id);
         }
         return result;
     }

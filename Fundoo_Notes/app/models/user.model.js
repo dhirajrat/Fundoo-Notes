@@ -103,12 +103,16 @@ class userModel {
         logger.error('data not found in database');
         return callback(error, null);
       } else {
-        if(data.verified == true){
-          logger.info('data found in database');
-          return callback(null, data);
+        if(data){
+          if(data.verified == true){
+            logger.info('data found in database');
+            return callback(null, data);
+          } else {
+            logger.info('data found in database but not verified');
+            return callback('not verified mail', null);
+          }
         } else {
-          logger.info('data found in database but not verified');
-          return callback('not verified mail', null);
+          return callback('User Not Exist', null);
         }
       }
     });

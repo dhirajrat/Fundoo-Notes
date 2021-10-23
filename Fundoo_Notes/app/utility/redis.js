@@ -4,17 +4,17 @@ const client = redis.createClient(process.env.REDIS_PORT);
 class Redis {
 
     checkCacheNote = (req, res, next) => {
-        client.get("noteid", (error, data) => {
+        client.get(req.params.id, (error, data) => {
             if(error) {
                 logger.error("Some error occured while retriving data", error)
             }
             if(data !== null) {
-                if(JSON.parse(data)._id == req.params.id){
+                // if(JSON.parse(data)._id == req.params.id){
                     data = JSON.parse(data);
                     res.send({success: true, message: "Note Retrieved redis !", data: data});
-                } else {
-                    next();
-                }
+                // } else {
+                //     next();
+                // }
             } else {
                 next();
             }
@@ -22,7 +22,7 @@ class Redis {
     }
 
     checkCacheLabel = (req, res, next) => {
-        client.get("label", (error, data) => {
+        client.get(req.params.id, (error, data) => {
             console.log("l 53");
             if(error) {
                 logger.error("Some error occured while retriving data", error)
@@ -41,7 +41,7 @@ class Redis {
         });
     }
 
-    clearCache() {
+    clearCache(key) {
         client.del(key);
         console.log('Cache is cleared!')
     }

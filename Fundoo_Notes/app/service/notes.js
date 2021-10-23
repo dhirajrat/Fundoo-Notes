@@ -42,7 +42,7 @@ class Service {
       noteModel.getNoteById(ids)
       .then((data) => {
         const rdata = JSON.stringify(data);
-        redisClass.setDataInCache("noteid", 3600, rdata);
+        redisClass.setDataInCache(data.id, 3600, rdata);
         resolve(data);
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ class Service {
         logger.error(error);
         return callback(error, null);
       } else {
-        redisClass.clearCache("noteid");
+        redisClass.clearCache(data.id);
         return callback(null, data);
       }
     }
@@ -80,7 +80,7 @@ class Service {
         logger.error(error);
         return callback(error, null);
       } else {
-        redisClass.clearCache("noteid");
+        redisClass.clearCache(data.id);
         return callback(null, data);
       }
     }
@@ -91,7 +91,7 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.addLabelToNote(labeldata)
       .then((data) => {
-        redisClass.clearCache("noteid");
+        redisClass.clearCache(data.id);
         resolve(data);
       })
       .catch((error) => {
@@ -104,7 +104,7 @@ class Service {
     return new Promise((resolve, reject) => {
       noteModel.deleteLabelFromNote(labeldata)
       .then((data) => {
-        redisClass.clearCache("noteid");
+        redisClass.clearCache(data.id);
         resolve(data);
       })
       .catch((error) => {

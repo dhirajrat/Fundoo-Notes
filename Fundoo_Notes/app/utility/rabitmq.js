@@ -7,7 +7,7 @@ class RabitMq {
      * @param {*} queue 
      */
     sender = (data,queue) => {
-        amqp.connect('amqp://localhost', (error, connection) => {
+        amqp.connect(process.env.RABIT_SERVER, (error, connection) => {
             if (error) {
                 throw error;
             } else {
@@ -32,7 +32,7 @@ class RabitMq {
      */
     receiver = (queue) => {
         return new Promise((resolve, reject)=>{
-            amqp.connect('amqp://localhost', (error, connection) => {
+            amqp.connect(process.env.RABIT_SERVER, (error, connection) => {
                 if (error) {
                     throw error;
                 } else {

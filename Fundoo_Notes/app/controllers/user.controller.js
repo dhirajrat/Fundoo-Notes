@@ -40,10 +40,10 @@ class Controller {
             message: "Already exist User",
           });
         } else {
-          logger.info('User Data Inserted successfully');
+          logger.info('User Data Inserted successfully Confirmation Mail sent');
           return res.status(201).json({
             success: true,
-            message: "User Data Inserted successfully",
+            message: "User Data Inserted successfully Confirmation Mail sent",
           });
         }
       });
