@@ -15,10 +15,10 @@ class Controller {
   register = (req, res) => {
     try {
       const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: req.body.first_name,
+        lastName: req.body.last_name,
         email: req.body.email,
-        Password: req.body.Password
+        Password: req.body.password
       };
       // Check Validation of User Data
       const validUser = validatorObj.authRegister.validate(user);
@@ -77,8 +77,7 @@ class Controller {
       } else {
         return res.json({
           success: true,
-          message: "Email Successfully Verified",
-          data: data
+          message: "Email Successfully Verified"
         });
       }
     })
@@ -100,8 +99,8 @@ class Controller {
   login = (req, res) => {
     try {
       const loginInfo = {
-        email : req.body.email,
-        Password : req.body.Password
+        email : req.body.username,
+        Password : req.body.password
       }
       // Validate Login Info
       const validLoginDetails = validatorObj.authLogin.validate(loginInfo)
@@ -151,7 +150,7 @@ class Controller {
    */
   forgetPassword = (req, res) => {
     try {
-      const info = { email: req.body.email }
+      const info = { email: req.body.username }
       userService.forgetPasswordService(info, (error, data) => {
         if (data){
           logger.info('reset password link sent Successfull');
@@ -185,11 +184,10 @@ class Controller {
    */
   resetPassword = (req, res) => {
     try{
-      console.log("160 "+req.userData.email+" "+req.userData.id);
       const resetInfo = {
         email: req.userData.email,
         id: req.userData.id,
-        newPassword: req.body.Password
+        newPassword: req.body.password
       }
       userService.resetPassword(resetInfo, (error, data) => {
         if (data) {

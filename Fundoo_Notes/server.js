@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 const logger = require('./logger/logger');
+const cors = require('cors');
 
 // const dotenv =
 require('dotenv').config();
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // parse requests of content-type - application/json
 app.use(express.json());
+
+app.use(cors());
 
 // Conneting To the Database
 const connection = require('./config/database.config');

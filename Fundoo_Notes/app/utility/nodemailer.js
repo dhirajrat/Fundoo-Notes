@@ -1,13 +1,13 @@
 const nodemailer = require("nodemailer");
 
-class SendResetPassMail {
+class SendMail {
   /**
    * Send Mail to Reset Password
    * @param {*} token 
    * @param {*} data 
    */
     sendResetPasswordMail = (token, data) => {
-      const link = `http://localhost:${process.env.PORT}/resetpassword/${token}`;
+      const link = `${process.env.CLIENT_SERVER}:${process.env.CLIENT_PORT}/resetpassword/${token}`;
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -55,7 +55,7 @@ class SendResetPassMail {
         to: data.email, // list of receivers
         subject: "Verify Mail - Fundoo notes account", // Subject line
         text: `Hello ${data.firstName}.`, // plain text body
-        html: `<b>Hello ${data.firstName}. Here is your link to Verify Mail: <button href="${link}"> <a href="${link}">reset password</a></button></b>`, // html body
+        html: `<b>Hello ${data.firstName}. Here is your link to Verify Mail: <button href="${link}"> <a href="${link}">verify mail</a></button></b>`, // html body
       });
 
       console.log("Message sent: %s", info.messageId);
@@ -66,4 +66,4 @@ class SendResetPassMail {
     }
 }
 
-module.exports = new SendResetPassMail();
+module.exports = new SendMail();

@@ -22,6 +22,6 @@ class DBconnection {
         process.exit();
       });
     }
-  }
+}
 
 module.exports = new DBconnection;

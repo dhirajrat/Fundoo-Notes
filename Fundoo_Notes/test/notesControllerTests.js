@@ -11,7 +11,7 @@ chai.should();
 chai.use(chaihttp);
 
 describe('Create Note tests :', () => {
-  it('for given data create note returned status should (200) after posting data', (done) => {
+  it.only('for given data create note returned status should (200) after posting data', (done) => {
     const note = {
       title: faker.lorem.word(),
       description: 'This is Note',
@@ -31,7 +31,7 @@ describe('Create Note tests :', () => {
     done();
   });
 
-  it('for given invalid token data create note returned status should (401) after posting data', (done) => {
+  it.only('for given invalid token data create note returned status should (401) after posting data', (done) => {
     const note = test.sampleNote.validNote;
     const token = test.invalidtoken;
     chai
@@ -50,7 +50,7 @@ describe('Create Note tests :', () => {
 });
 
 describe('get all note api test cases', () => {
-  it('for given valid token data get all notes note returned status should (200) after posting data', (done) => {
+  it.only('for given valid token data get all notes note returned status should (200) after posting data', (done) => {
     const token = test.validtoken;
     chai
       .request(server)
@@ -65,7 +65,7 @@ describe('get all note api test cases', () => {
       });
   });
 
-  it('for given Invalid token data get all notes note returned status should (401) after posting data', (done) => {
+  it.only('for given Invalid token data get all notes note returned status should (401) after posting data', (done) => {
     const token = test.invalidtoken;
     chai
       .request(server)
@@ -83,7 +83,7 @@ describe('get all note api test cases', () => {
 });
 
 describe('get note by id api test cases', () => {
-  it('for given valid token data get note with id returned status should (200) after posting data', (done) => {
+  it.only('for given valid token data get note with id returned status should (200) after posting data', (done) => {
     const token = test.validtoken;
     const id = test.validid;
     chai
@@ -98,7 +98,7 @@ describe('get note by id api test cases', () => {
         done();
       });
   });
-  it('for given Invalid token data get note with id returned status should (401) after posting data', (done) => {
+  it.only('for given Invalid token data get note with id returned status should (401) after posting data', (done) => {
     const token = test.invalidtoken;
     const id = test.validid;
     chai
@@ -113,7 +113,7 @@ describe('get note by id api test cases', () => {
         done();
       });
   });
-  it('for given Empty token data get note with id returned status should (401) after posting data', (done) => {
+  it.only('for given Empty token data get note with id returned status should (401) after posting data', (done) => {
     const token = test.invalidtoken;
     const id = test.validid;
     chai
@@ -125,7 +125,7 @@ describe('get note by id api test cases', () => {
         if (err) {
           return done(err);
         }
-        res.should.have.status(200);
+        res.should.have.status(401);
         done();
       });
   });
@@ -155,7 +155,7 @@ describe('update note by ID', () => {
 });
 
 describe('delete note by ID', () => {
-  it('for given valid token data delete note with id returned status should (404) after posting data', (done) => {
+  it.only('for given valid token data delete note with id returned status should (404) after posting data', (done) => {
     const token = test.validtoken;
     const id = test.delid;
     chai
@@ -168,6 +168,40 @@ describe('delete note by ID', () => {
           return done(err);
         }
         res.should.have.status(404);
+        done();
+      });
+  });
+});
+
+describe('get redis note by id api for positive and negative test case', () => {
+  it.only('GivenGetRedisNoteByIdDetails_When_Note_Get_Successfully', (done) => {
+    const token = test.validtoken;
+    const id = test.validid;
+    chai
+      .request(server)
+      .get(`/getnotesbyid/${id}`)
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(200);
+        done();
+      });
+  });
+
+  it.only('GivenGetRedisNoteByIdDetails_When_Note_RedisGet_SortTime_Successfully', (done) => {
+    const token = test.validtoken;
+    const id = test.validid;
+    chai
+      .request(server)
+      .get(`/getnotesbyid/${id}`)
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(200);
         done();
       });
   });

@@ -11,7 +11,7 @@ chai.should();
 chai.use(chaihttp);
 
 describe('create label api for positive and negative test case', () => {
-  it('GivenLabelDetails_When_Label_Created_Successfully', (done) => {
+  it.only('GivenLabelDetails_When_Label_Created_Successfully', (done) => {
     const token = test.validtoken;
     const createLabel = {
       labelName: faker.lorem.word(),
@@ -30,10 +30,10 @@ describe('create label api for positive and negative test case', () => {
       });
   });
 
-  it('GivenLabelDetails_When_Label_Name_Empty', (done) => {
+  it.only('GivenLabelDetails_When_Label_Name_Empty', (done) => {
     const token = test.validtoken;
     const createLabel = {
-      labelName: ' ',
+      labelName: '',
     };
     chai
       .request(server)
@@ -51,7 +51,7 @@ describe('create label api for positive and negative test case', () => {
 });
 
 describe('get label api for positive and negative test case', () => {
-  it('GivenLabelDetails_When_Label_Get_Successfully', (done) => {
+  it.only('GivenLabelDetails_When_Label_Get_Successfully', (done) => {
     const token = test.validtoken;
     chai
       .request(server)
@@ -66,7 +66,7 @@ describe('get label api for positive and negative test case', () => {
       });
   });
 
-  it('GivenLabelDetails_When_Label_Get_Successfully 401', (done) => {
+  it.only('GivenLabel_InvalidDetails_When_Label_Not Get_Successfully 401', (done) => {
     const token = test.invalidtoken;
     chai
       .request(server)
@@ -103,7 +103,7 @@ describe('update label api for positive and negative test case', () => {
       });
   });
 
-  it('GivenLabelDetails_When_Label_Update_UnSuccessfully 500', (done) => {
+  it.only('GivenLabelDetails_When_Label_Update_UnSuccessfully 500', (done) => {
     const token = test.validtoken;
     const createLabel = {
       labelName: faker.lorem.word(),
@@ -141,7 +141,7 @@ describe('Delete label api for positive and negative test case', () => {
       });
   });
 
-  it('GivenLabelDetails_When_Label_delete_Not_Successfully 404', (done) => {
+  it.only('GivenLabelDetails_When_Label_delete_Not_Successfully 404', (done) => {
     const token = test.validtoken;
     const id = test.invalidid;
     chai

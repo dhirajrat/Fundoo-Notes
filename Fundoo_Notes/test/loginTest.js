@@ -13,7 +13,7 @@ chai.should();
 chai.use(chaihttp);
 
 describe('login tests:', () => {
-  it('for given login credentials return status code should (200) login', (done) => {
+  it.only('for given login credentials return status code should (200) login', (done) => {
     const user = test.user.loginData;
     chai
       .request(server)
@@ -28,7 +28,7 @@ describe('login tests:', () => {
     done();
   });
 
-  it('for given incorrect login credentials return status code should (403) login', (done) => {
+  it.only('for given incorrect login credentials return status code should (403) login', (done) => {
     const user = test.user.incorrectloginData;
     chai
       .request(server)

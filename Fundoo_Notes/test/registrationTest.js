@@ -14,7 +14,7 @@ chai.should();
 chai.use(chaihttp);
 
 describe('Registration tests :', () => {
-  it('for given data returned status should (201) after posting data', (done) => {
+  it.only('for given data returned status should (201) after posting data', (done) => {
     // const user = test.user.registerAuth;
     const user = {
       firstName: faker.name.firstName(),
@@ -35,7 +35,28 @@ describe('Registration tests :', () => {
     done();
   });
 
-  it('for given Invalid data returned status should (400) after posting data', (done) => {
+  it.only('GivenRegistrationDetails_WhenProper_UserRegistered_Successfully', (done) => {
+    // const user = test.user.registerAuth;
+    const user = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName(),
+      email: faker.internet.email(),
+      Password: 'AbcdS@34#5.35',
+    };
+    chai
+      .request(server)
+      .post('/register')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(201);
+        if (err) {
+          return done(err);
+        }
+      });
+    done();
+  });
+
+  it.only('for given Invalid data returned status should (400) after posting data', (done) => {
     const user = test.user.registerunAuth;
     chai
       .request(server)
@@ -50,7 +71,7 @@ describe('Registration tests :', () => {
     done();
   });
 
-  it('for given Invalid data without firstName returned status should (400) after posting data', (done) => {
+  it.only('for given Invalid data without firstName returned status should (400) after posting data', (done) => {
     const user = test.user.registerInvalid;
     chai
       .request(server)
@@ -58,6 +79,21 @@ describe('Registration tests :', () => {
       .send(user)
       .end((err, res) => {
         res.should.have.status(400);
+        if (err) {
+          return done(err);
+        }
+      });
+    done();
+  });
+
+  it.only('GivenRegistrationDetails_WhenProper_UserRegistered_Already Exist', (done) => {
+    const user = test.user.registerAuth;
+    chai
+      .request(server)
+      .post('/register')
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(409);
         if (err) {
           return done(err);
         }

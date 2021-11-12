@@ -113,10 +113,10 @@ class helper {
        */
       verifyTokenForReset = (req, res, next) => {
         try {
-          const header = req.headers.authorization;
-          const myArr = header.split(" ");
-          console.log("head: "+header);
-          const token = myArr[1];
+          // const header = req.headers.authorization;
+          // const myArr = header.split(" ");
+          // console.log("118 head: "+header);
+          const token = req.headers.token;
             const decode = jwt.verify(token, process.env.SECRET_KEY_FOR_RESET);
             if (decode) {
               console.log("help ver token decode mail"+decode.email+" id "+decode.id);
